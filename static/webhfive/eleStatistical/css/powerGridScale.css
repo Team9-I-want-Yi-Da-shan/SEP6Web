@@ -1,0 +1,290 @@
+
+
+
+/* 通用样式 */
+   *{
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-family: "微软雅黑";
+    list-style: none;
+    text-decoration: none;
+}
+body {  
+    width: 100%;    
+    background-color:#f8f8f8;
+}
+/*清除浮动*/
+.clear_float:after{
+    content:".";
+    clear:both;
+    display:block;
+    height:0;
+    overflow:hidden;
+    visibility:hidden;
+}
+/* 弹性盒子 */
+.flex-row {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction:row;
+    align-items:center;
+}
+.flex-col {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction:column;
+}
+
+
+
+.swiper-wrap .weui-cells {
+	 margin-top: 0;
+}
+.swiper-wrap .weui-cells:before {
+	border-top:none;
+}
+ .swiper-wrap .weui-cells:after {
+	border-bottom:1px solid #eee;
+}
+.swiper-wrapper .swiper-slide .title{
+	font-size: 0.7rem;
+/*     padding-bottom: 2px; */
+}
+.swiper-wrap .weui-cell{
+	padding:0;
+	padding-top:6px;
+}
+.power {
+	width: 100%;
+	display:none;
+}
+.power  .detail-infos .number{
+	color:#666;
+}
+.power .detail-infos .list p{
+	color:#999;
+}
+.power .echart-wrap {
+	/*border: 1px solid red;*/
+	width: 100%;
+	height: 16rem;
+	overflow: auto;
+	box-sizing: border-box;
+	background-color:#fff;
+}
+.power .echart-wrap .echart{
+	width: 800px;
+	height: 15rem;
+}
+.power .detail-infos {
+	width: 100%;
+	border-top: 1px solid #eee;
+	box-shadow: 0px 0px 5px #eee;
+	box-sizing: border-box;
+	background-color:#fff;
+	margin-top: 0.5rem;
+/* 	padding:0 15px; */
+}
+.power .detail-infos .title {
+/* 	padding:0.5em 0; */
+	border-bottom: 1px solid #ddd;
+    height: 1.78rem;
+    line-height: 1.9rem;
+}
+.power .detail-infos .title h3{
+	font-size: 0.7rem;
+	font-weight: normal;
+	text-align:center;
+}
+.power .detail-infos p {
+	color: #666;
+	font-size:0.7rem;
+}
+.power .detail-infos .infos {
+	padding: 0 0 0 0.48rem;
+}
+.power .detail-infos .item {
+	justify-content: space-between;
+    padding: 0.55rem 0.48rem 0.48rem 0;
+    border-bottom: 1px solid #eee;
+    height: 1.78rem;
+    box-sizing: border-box;
+}
+.power .detail-infos .item:last-child{
+	border:none;
+}
+/* 装机容量 */
+.capacity .echart-wrap {
+	height: 21rem;
+}
+.capacity .echart-wrap {
+	border-bottom:1px solid #efefef;
+	overflow:hidden;
+}
+.capacity .echart-wrap .capa-echart{
+	width:100%;
+	height:20rem;
+}
+.power .detail-infos .title {
+	border:none;
+}
+.capacity .list {
+	justify-content: space-between;
+	padding:0.5em 0;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	height: 1.78rem;
+    line-height: 1.8rem;
+}
+.capacity .list p {
+	font-size:0.8rem;
+}
+.power .detail-infos .list .active {
+	color:#00ac86;
+	font-size:0.7rem;
+}
+.capacity .detail-infos {
+	margin-top: 0.5em;
+/* 	padding: 0 15px; */
+}
+.capacity .detail-infos .item {
+	border:none;
+	border-bottom:1px solid #eee;
+}
+.capacity .detail-infos .item:last-child{
+	border:none;
+}
+/* 能源结构 */
+.energy .echart-wrap {
+	border-bottom:1px solid #efefef;
+	overflow:hide;
+	width:100%;
+	height:21rem;
+}
+.energy .echart-wrap .energy-echart{
+	width:100%;
+	height:20rem;
+}
+.energy .list-wrap {
+	width:100%;
+	overflow:auto;
+	border-bottom: 1px solid #eee;
+}
+.energy .list {
+	width: 28rem;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    height: 1.78rem;
+    line-height:1.8rem;
+	
+}
+.energy .list p {
+	font-size:0.7rem;
+}
+.energy .list .active {
+	color:#00ac86;
+	font-size:0.7rem;
+}
+.list p{
+	font-size:0.7rem;
+}
+/* 能源结构 */
+.trans-capa .echart-wrap {
+	border-bottom:1px solid #efefef;
+	overflow:hidden;
+	width:100%;
+	height:9.45rem;
+}
+.trans-capa .echart-wrap .trans-capa-echart{
+	width:100%;
+	height:9.45rem;
+}
+.trans-capa .list-wrap {
+	width:100%;
+	overflow:auto;
+}
+.trans-capa .list {
+	width:100%;
+	justify-content: space-between;
+	padding:0.5em 0;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	box-sizing: border-box;
+	height: 1.78rem;
+    line-height: 1.8rem;
+	
+}
+.trans-capa .list p {
+	font-size:0.7rem;
+	float:left;
+	margin-right:2rem;
+}
+.trans-capa .list .active {
+	color:#00ac86;
+	font-size:1rem;
+}
+/* 输电线路 */
+.trans-line .echart-wrap {
+	border-bottom:1px solid #efefef;
+	overflow:hide;
+	width:100%;
+	height:7.5rem;
+}
+.trans-line .echart-wrap .trans-line-echart{
+	width:100%;
+	height:7.5rem;
+}
+.trans-line .list-wrap {
+	width:100%;
+	overflow:auto;
+}
+.trans-line .list {
+	width:100%;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	box-sizing: border-box;
+	height: 1.78rem;
+    line-height: 1.8rem;
+}
+.trans-line .list p {
+	font-size:0.7rem;
+	float:left;
+	margin-right:2rem;
+}
+.trans-line .list .active {
+	color:#00ac86;
+	font-size:1rem;
+}
+.power .list{
+	padding: 0 0.48rem;
+}
+/* 暂无数据 */
+.echart-wrap{
+	positon:relative;
+}
+.echarts_img{
+	position:absolute;
+	display:none;
+	justify-content:center;
+	width:100%;
+	top:45%;
+}
+.zwsj{
+	width:100%;
+	height:1.6rem;
+	display: inline-block;
+	vertical-align:middle;
+	background:url('./../../eleStatistical/img/zwsj.png') no-repeat center center;
+	background-position:center;
+}
+.echarts_img>div{
+	width:100%;
+	text-align: center;
+	font-size:0.7rem;
+	color:#999;
+}
+
+
+
