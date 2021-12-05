@@ -1,6 +1,68 @@
 <!-- Logo 搜索 登录 注册 -->
 <!-- 显示8条推荐电影 -->
+<!-- 显示统计图 -->
 <!DOCTYPE html>
 <html>
+
+<head>
+    <title>BestMovies</title>
+    <link rel="stylesheet" href="../../static/webhfive/news/lib/weui.min.css">
+    <link rel="stylesheet" href="../../static/webhfive/news/css/jquery-weui.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+
+
+    <link rel="stylesheet" href="frontpage.css" />
+</head>
+
+<body ontouchstart>
+    <div class="page__bd" id="app">
+        <!-- head -->
+
+        <div class="row" id="header">
+            <div class="col-md-2">
+                <img src="../../static/images/movie-ticket.png" alt="Movie logo" width="30%"> BestMovies
+            </div>
+            <div class="col-md-8 ">
+
+                <div class="row ">
+                    <div class="col-md-10 ">
+                        <input type="search " id='search' placeholder='Search movie' />
+                    </div>
+                    <div class="col-md-2 ">
+                        <button class="weui-btn weui-btn_default "><i class="icon icon-4 ">Search</i></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-2 ">Login SignUp {{ next }}</div>
+        </div>
+
+
+        <!-- recommend movies -->
+        <section>recommend movies</section>
+
+        <!-- echarts -->
+    </div>
+
+    <script src="../../static/webhfive/lib/echarts/echarts.min.js "></script>
+    <script src="../../static/webhfive/news/lib/jquery-2.1.4.js "></script>
+    <script src="../../static/iconfont/iconfont.js "></script>
+    <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
+    <!-- <script src="../../static/scripts/lib/vue.min.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- <script src="../vue/eleStatistical.js "></script> -->
+
+    <script>
+        var data = {
+            next: 'hello'
+        }
+        var vue = new Vue({
+            el: "#app",
+            data: data
+        });
+    </script>
+</body>
 
 </html>

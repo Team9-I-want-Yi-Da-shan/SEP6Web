@@ -1,0 +1,18 @@
+.header {
+    background-color: #424242;
+}
+
+
+/* * {
+    background-color: #757575;
+} */
+
+#search {
+    background-color: #BDBDBD;
+    width: 100%
+}
+
+#movielogo {
+    margin: auto;
+    width: 20px;
+}
