@@ -11,7 +11,10 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
     <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
-
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
     <link rel="stylesheet" href="frontpage.css" />
 </head>
@@ -20,28 +23,39 @@
     <div class="page__bd" id="app">
         <!-- head -->
 
-        <div class="row" id="header">
-            <div class="col-md-2">
-                <img src="../../static/images/movie-ticket.png" alt="Movie logo" width="30%"> BestMovies
-            </div>
-            <div class="col-md-8 ">
-
-                <div class="row ">
-                    <div class="col-md-10 ">
-                        <input type="search " id='search' placeholder='Search movie' />
-                    </div>
-                    <div class="col-md-2 ">
-                        <button class="weui-btn weui-btn_default "><i class="icon icon-4 ">Search</i></button>
-                    </div>
+        <div class="header">
+            <div class="left_header">
+                <div class="logo_container">
+                    <h1 class="title">Best<span>Movies</span></h1>
                 </div>
 
+                <ul class="navigation">
+                    <a>
+                        <li>Login</li>
+                    </a>
+                    <a>
+                        <li>SignUp</li>
+                    </a>
+                </ul>
             </div>
-            <div class="col-md-2 ">Login SignUp {{ next }}</div>
+
+        </div>
+        <div class="boxContainer">
+            <table class="elementContainer">
+                <tr>
+                    <td>
+                        <input type="text" placeholder="Search" class="search">
+                    </td>
+                    <td>
+                        <a href="#"><i class="material-icons">search</i></a>
+                    </td>
+                </tr>
+            </table>
         </div>
 
 
         <!-- recommend movies -->
-        <section>recommend movies</section>
+        <!-- <section>recommend movies</section> -->
 
         <!-- echarts -->
     </div>
@@ -56,7 +70,17 @@
 
     <script>
         var data = {
-            next: 'hello'
+            isLogin: 0,
+            next: 'test',
+            recommends: [{
+                    "id": 2872732,
+                    "name": "Lucy",
+                    "year": 2000,
+                    "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
+
+                },
+
+            ]
         }
         var vue = new Vue({
             el: "#app",
