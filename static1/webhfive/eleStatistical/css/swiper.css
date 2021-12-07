@@ -1,0 +1,50 @@
+/* ============================================================================================================================================================
+												滑动模块样式
+=============================================================================================================================================================== */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  text-align: center;
+  background: #fff;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+/*   padding-bottom: 1.5%; */
+  margin-bottom:7px;
+}
+.swiper-container .title{
+	color:#000000;
+	font-size: 0.7rem;
+}
+.swiper-container .subtitle{
+	color:#777777;
+	font-size: 0.48rem;
+	height: 0.6rem;
+}
+.swiper-container .bg_color{
+	color:#00b08a;
+}
+.swiper-container .bg_color_bottom{
+/* 	border-bottom: 2px solid #00b08a; */
+	margin-bottom: 2px;
+}
+.cell_bottom{
+	padding-bottom: 0;
+}
+.bg_bottom{
+    border-radius: 10px;
+    background: #00b08a;
+    color: #fff !important;
+    width: 56%;
+    padding-top: 1%;
+/*     height: 0.7rem; */
+/*     line-height: 0.75rem; */
+    margin: 0 auto;
+}

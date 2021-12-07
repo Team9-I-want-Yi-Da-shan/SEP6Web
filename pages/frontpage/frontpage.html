@@ -1,6 +1,3 @@
-<!-- Logo 搜索 登录 注册 -->
-<!-- 显示8条推荐电影 -->
-<!-- 显示统计图 -->
 <!DOCTYPE html>
 <html>
 
@@ -31,10 +28,11 @@
 
                 <ul class="navigation">
                     <a>
-                        <li>Login</li>
+                        <li v-if="!isLogin" @click="clickLogin">Login</li>
+                        <li v-if="isLogin">{{username}}</li>
                     </a>
                     <a>
-                        <li>SignUp</li>
+                        <li v-if="!isLogin" @click="clickSignUp">SignUp</li>
                     </a>
                 </ul>
             </div>
@@ -55,36 +53,153 @@
 
 
         <!-- recommend movies -->
-        <!-- <section>recommend movies</section> -->
+        <section>
+            <h1>Recommend Movies</h1>
+            <div class="recommendMovieRow">
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                    <h3>Movie nameMovie nameMovie nameMovie nameMovie name</h3>
+                    <h4>2013</h4>
+                </div>
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                </div>
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                </div>
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                </div>
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                </div>
+                <div class="recommentMovieContainer">
+                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                </div>
+
+            </div>
+        </section>
 
         <!-- echarts -->
+        <section>
+            <h1>Movie Analysis</h1>
+
+            <div class="row">
+                <div class="col-md-6" id="chart_movieRate">Chart1</div>
+                <div class="col-md-6" id="chart_movieCount">Chart2</div>
+            </div>
+
+
+
+        </section>
+
+        <div class="weui-footer">
+            <p class="weui-footer__links">
+                <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
+                <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
+            </p>
+            <p class="weui-footer__text">Copyright © 2021-2022</p>
+        </div>
     </div>
 
-    <script src="../../static/webhfive/lib/echarts/echarts.min.js "></script>
-    <script src="../../static/webhfive/news/lib/jquery-2.1.4.js "></script>
-    <script src="../../static/iconfont/iconfont.js "></script>
+    <script src="../../static/js/echarts.min.js"></script>
+    <script src="../../static/scripts/lib/jquery-2.1.4.js "></script>
     <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
-    <!-- <script src="../../static/scripts/lib/vue.min.js "></script> -->
+    <script src="../../static/js/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- <script src="../vue/eleStatistical.js "></script> -->
 
     <script>
         var data = {
-            isLogin: 0,
+            isLogin: false,
+            username: "Username",
             next: 'test',
             recommends: [{
                     "id": 2872732,
                     "name": "Lucy",
                     "year": 2000,
                     "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
-
                 },
 
-            ]
+            ],
+
+            // chart data
+            movieRateList: {
+                year: [1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993,
+                    1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+                    2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+                ],
+                rate: ["5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                    "5929", "5632", "1233", "4456", "5929", "5632", "1233", "4456",
+                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456"
+                ],
+            }
         }
         var vue = new Vue({
             el: "#app",
-            data: data
+            data: data,
+            mounted: function() {
+                this.chart_movieRate()
+            },
+            methods: {
+                clickLogin() {
+                    this.isLogin = true;
+                    alert("login")
+                },
+                clickSignUp() {
+                    alert("sign up")
+                },
+
+                //Echart
+                chart_movieRate() {
+                    var load_lief = document.getElementById("chart_movieRate");
+                    var myChart = echarts.init(load_lief);
+                    var datalist = this.movieRateList
+                    var colors = ['#83ad23', '#09ab93'];
+                    option = {
+                        xAxis: {
+                            type: 'category',
+                            data: datalist.year
+                        },
+                        color: colors,
+                        legend: {
+                            data: ['Rate', 'Number']
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross'
+                            }
+                        },
+                        grid: {
+                            // 间距是 根据x、y轴计算的；假如都是0，x、y轴的label汉字就隐藏掉了。
+                            top: 50, // 默认60
+                            left: 50,
+                            right: 50,
+                            bottom: 24, // 默认60
+                        },
+                        yAxis: {
+                            name: 'Average Rate',
+                            axisLine: {
+                                show: true,
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        series: [{
+                            name: "Average Rate",
+                            data: datalist.rate,
+                            type: 'line',
+                            smooth: true
+                        }]
+                    };
+                    myChart.setOption(option);
+                },
+
+            }
         });
     </script>
 </body>
