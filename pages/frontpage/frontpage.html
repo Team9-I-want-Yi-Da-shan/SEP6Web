@@ -28,11 +28,11 @@
 
                 <ul class="navigation">
                     <a>
-                        <li v-if="!isLogin" @click="clickLogin">Login</li>
+                        <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
                         <li v-if="isLogin">{{username}}</li>
                     </a>
                     <a>
-                        <li v-if="!isLogin" @click="clickSignUp">SignUp</li>
+                        <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
                     </a>
                 </ul>
             </div>
@@ -50,6 +50,59 @@
                 </tr>
             </table>
         </div>
+        <!-- login  -->
+        <div v-if="clickLogin" class="center">
+            <h1>Login</h1>
+            <div @click="clickCloseBTN" class="close">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form method="post">
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>UserID</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="pass">Forget Password?</div>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member?<a href="#">Signup</a>
+                </div>
+            </form>
+        </div>
+        <!-- sign up  -->
+        <div v-if="clickSignup" class="center">
+            <h1>SignUp</h1>
+            <div @click="clickCloseBTN" class="close">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form method="post">
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>UserID</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>UserName</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <!-- <div class="pass">Forget Password?</div> -->
+                <input type="submit" value="SignUp">
+                <p></p>
+            </form>
+        </div>
 
 
         <!-- recommend movies -->
@@ -62,13 +115,13 @@
                     <h4>2013</h4>
                 </div>
                 <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                    <img src="https://imdb-api.comV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
                 </div>
                 <div class="recommentMovieContainer">
                     <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
                 </div>
                 <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                    <!-- <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"> -->
                 </div>
                 <div class="recommentMovieContainer">
                     <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
@@ -101,7 +154,7 @@
             <p class="weui-footer__text">Copyright © 2021-2022</p>
         </div>
     </div>
-
+    <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
     <script src="../../static/js/echarts.min.js"></script>
     <script src="../../static/scripts/lib/jquery-2.1.4.js "></script>
     <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
@@ -111,6 +164,8 @@
 
     <script>
         var data = {
+            clickLogin: false,
+            clickSignup: false,
             isLogin: false,
             username: "Username",
             next: 'test',
@@ -118,8 +173,28 @@
                     "id": 2872732,
                     "name": "Lucy",
                     "year": 2000,
-                    "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
-                },
+
+                }, {
+                    "id": 4679576,
+                    "name": "Bloodhound",
+                    "year": 2020,
+                }, {
+                    "id": 3380766,
+                    "name": "King's Gambit",
+                    "year": 2000,
+                }, {
+                    "id": 3278540,
+                    "name": "A Nice Girl Like You",
+                    "year": 2002,
+                }, {
+                    "id": 65005,
+                    "name": "Oso yparhei erotas",
+                    "year": 2019,
+                }, {
+                    "id": 13282096,
+                    "name": "The Cage of Life",
+                    "year": 2010,
+                }
 
             ],
 
@@ -144,12 +219,19 @@
                 this.chart_movieRate()
             },
             methods: {
-                clickLogin() {
-                    this.isLogin = true;
-                    alert("login")
+                clickLoginBTN() {
+                    this.clickSignup = false;
+                    this.clickLogin = true;
+
                 },
                 clickSignUp() {
-                    alert("sign up")
+                    this.clickLogin = false;
+                    this.clickSignup = true;
+
+                },
+                clickCloseBTN() {
+                    this.clickLogin = false;
+                    this.clickSignup = false
                 },
 
                 //Echart
