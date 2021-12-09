@@ -33,6 +33,7 @@
                     </a>
                     <a>
                         <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
+                        <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
                     </a>
                 </ul>
             </div>
@@ -42,10 +43,10 @@
             <table class="elementContainer">
                 <tr>
                     <td>
-                        <input type="text" placeholder="Search" class="search">
+                        <input v-model="searchText" type="text" placeholder="Search" class="search">
                     </td>
                     <td>
-                        <a href="#"><i class="material-icons">search</i></a>
+                        <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
                     </td>
                 </tr>
             </table>
@@ -59,19 +60,19 @@
 
             <form method="post">
                 <div class="txt_field">
-                    <input type="text" required>
+                    <input v-model="userId" type="text" required>
                     <span></span>
                     <label>UserID</label>
                 </div>
                 <div class="txt_field">
-                    <input type="password" required>
+                    <input v-model="password" type="password" required>
                     <span></span>
                     <label>Password</label>
                 </div>
-                <div class="pass">Forget Password?</div>
+                <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
                 <input type="submit" value="Login">
                 <div class="signup_link">
-                    Not a member?<a href="#">Signup</a>
+                    Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
             </form>
         </div>
@@ -84,17 +85,17 @@
 
             <form method="post">
                 <div class="txt_field">
-                    <input type="text" required>
+                    <input v-model="userId" type="text" required>
                     <span></span>
                     <label>UserID</label>
                 </div>
                 <div class="txt_field">
-                    <input type="text" required>
+                    <input v-model="username" type="text" required>
                     <span></span>
                     <label>UserName</label>
                 </div>
                 <div class="txt_field">
-                    <input type="password" required>
+                    <input v-model="password" type="password" required>
                     <span></span>
                     <label>Password</label>
                 </div>
@@ -109,25 +110,10 @@
         <section>
             <h1>Recommend Movies</h1>
             <div class="recommendMovieRow">
-                <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                    <h3>Movie nameMovie nameMovie nameMovie nameMovie name</h3>
-                    <h4>2013</h4>
-                </div>
-                <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.comV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                </div>
-                <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                </div>
-                <div class="recommentMovieContainer">
-                    <!-- <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"> -->
-                </div>
-                <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                </div>
-                <div class="recommentMovieContainer">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
+                <div v-for="movie in recommends" class="recommentMovieContainer">
+                    <img v-bind:src="movie.img">
+                    <h3>{{movie.name}}</h3>
+                    <h4>{{movie.year}}</h4>
                 </div>
 
             </div>
@@ -154,136 +140,145 @@
             <p class="weui-footer__text">Copyright © 2021-2022</p>
         </div>
     </div>
-    <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
-    <script src="../../static/js/echarts.min.js"></script>
-    <script src="../../static/scripts/lib/jquery-2.1.4.js "></script>
-    <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
-    <script src="../../static/js/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!-- <script src="../vue/eleStatistical.js "></script> -->
-
-    <script>
-        var data = {
-            clickLogin: false,
-            clickSignup: false,
-            isLogin: false,
-            username: "Username",
-            next: 'test',
-            recommends: [{
-                    "id": 2872732,
-                    "name": "Lucy",
-                    "year": 2000,
-
-                }, {
-                    "id": 4679576,
-                    "name": "Bloodhound",
-                    "year": 2020,
-                }, {
-                    "id": 3380766,
-                    "name": "King's Gambit",
-                    "year": 2000,
-                }, {
-                    "id": 3278540,
-                    "name": "A Nice Girl Like You",
-                    "year": 2002,
-                }, {
-                    "id": 65005,
-                    "name": "Oso yparhei erotas",
-                    "year": 2019,
-                }, {
-                    "id": 13282096,
-                    "name": "The Cage of Life",
-                    "year": 2010,
-                }
-
-            ],
-
-            // chart data
-            movieRateList: {
-                year: [1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993,
-                    1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
-                    2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
-                ],
-                rate: ["5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
-                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
-                    "5929", "5632", "1233", "4456", "5929", "5632", "1233", "4456",
-                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
-                    "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456"
-                ],
-            }
-        }
-        var vue = new Vue({
-            el: "#app",
-            data: data,
-            mounted: function() {
-                this.chart_movieRate()
-            },
-            methods: {
-                clickLoginBTN() {
-                    this.clickSignup = false;
-                    this.clickLogin = true;
-
-                },
-                clickSignUp() {
-                    this.clickLogin = false;
-                    this.clickSignup = true;
-
-                },
-                clickCloseBTN() {
-                    this.clickLogin = false;
-                    this.clickSignup = false
-                },
-
-                //Echart
-                chart_movieRate() {
-                    var load_lief = document.getElementById("chart_movieRate");
-                    var myChart = echarts.init(load_lief);
-                    var datalist = this.movieRateList
-                    var colors = ['#83ad23', '#09ab93'];
-                    option = {
-                        xAxis: {
-                            type: 'category',
-                            data: datalist.year
-                        },
-                        color: colors,
-                        legend: {
-                            data: ['Rate', 'Number']
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'cross'
-                            }
-                        },
-                        grid: {
-                            // 间距是 根据x、y轴计算的；假如都是0，x、y轴的label汉字就隐藏掉了。
-                            top: 50, // 默认60
-                            left: 50,
-                            right: 50,
-                            bottom: 24, // 默认60
-                        },
-                        yAxis: {
-                            name: 'Average Rate',
-                            axisLine: {
-                                show: true,
-                            },
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        },
-                        series: [{
-                            name: "Average Rate",
-                            data: datalist.rate,
-                            type: 'line',
-                            smooth: true
-                        }]
-                    };
-                    myChart.setOption(option);
-                },
-
-            }
-        });
-    </script>
 </body>
 
 </html>
+<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/echarts.min.js"></script>
+<script src="../../static/js/jquery-2.1.4.js"></script>
+<script src="../../static/webhfive/news/js/jquery-weui.js "></script>
+<script src="../../static/js/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="../../static/js/network.js "></script>
+
+<script>
+    var data = {
+        clickLogin: false,
+        clickSignup: false,
+        isLogin: false,
+        userId: '',
+        password: '',
+        username: '',
+        searchText: '',
+        img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
+        recommends: [{
+                "id": 2872732,
+                "name": "Lucy",
+                "year": 2000,
+                "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
+
+            }, {
+                "id": 4679576,
+                "name": "Bloodhound",
+                "year": 2020,
+            }, {
+                "id": 3380766,
+                "name": "King's Gambit",
+                "year": 2000,
+            }, {
+                "id": 3278540,
+                "name": "A Nice Girl Like You",
+                "year": 2002,
+            }, {
+                "id": 65005,
+                "name": "Oso yparhei erotas",
+                "year": 2019,
+            }, {
+                "id": 13282096,
+                "name": "The Cage of Life",
+                "year": 2010,
+            }
+
+        ],
+
+        // chart data
+        movieRateList: {
+            year: [1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993,
+                1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+                2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+            ],
+            rate: ["5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                "5929", "5632", "1233", "4456", "5929", "5632", "1233", "4456",
+                "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456",
+                "5929", "5632", "1233", "4456", "4456", "4456", "4456", "4456", "4456", "4456"
+            ],
+        }
+    }
+    var vue = new Vue({
+        el: "#app",
+        data: data,
+        mounted: function() {
+            getMoviePosterImg(13282096)
+            this.chart_movieRate()
+        },
+        methods: {
+            clickLoginBTN() {
+                this.clickSignup = false;
+                this.clickLogin = true;
+
+            },
+            clickSignUp() {
+                this.clickLogin = false;
+                this.clickSignup = true;
+
+            },
+            clickCloseBTN() {
+                this.clickLogin = false;
+                this.clickSignup = false
+            },
+            clickSearchBTN() {
+                let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
+                location.href = url;
+            },
+
+            //Echart
+            chart_movieRate() {
+                var load_lief = document.getElementById("chart_movieRate");
+                var myChart = echarts.init(load_lief);
+                var datalist = this.movieRateList
+                var colors = ['#83ad23', '#09ab93'];
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: datalist.year
+                    },
+                    color: colors,
+                    legend: {
+                        data: ['Rate', 'Number']
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    grid: {
+                        // 间距是 根据x、y轴计算的；假如都是0，x、y轴的label汉字就隐藏掉了。
+                        top: 50, // 默认60
+                        left: 50,
+                        right: 50,
+                        bottom: 24, // 默认60
+                    },
+                    yAxis: {
+                        name: 'Average Rate',
+                        axisLine: {
+                            show: true,
+                        },
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    series: [{
+                        name: "Average Rate",
+                        data: datalist.rate,
+                        type: 'line',
+                        smooth: true
+                    }]
+                };
+                myChart.setOption(option);
+            },
+
+        }
+    });
+</script>
