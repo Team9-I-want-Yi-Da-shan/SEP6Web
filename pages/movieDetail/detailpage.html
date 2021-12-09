@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Detail-BestMovies</title>
+    <link rel="stylesheet" href="../../static/webhfive/news/lib/weui.min.css">
+    <link rel="stylesheet" href="../../static/webhfive/news/css/jquery-weui.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+
+    <link rel="stylesheet" href="../frontpage/frontpage.css" />
+</head>
+
+<body ontouchstart>
+    <div class="page__bd" id="app">
+        <div class="header">
+            <div class="left_header">
+                <div class="logo_container">
+                    <h1 class="title">Best<span>Movies</span></h1>
+                </div>
+
+                <ul class="navigation">
+                    <a>
+                        <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
+                        <li v-if="isLogin">{{username}}</li>
+                    </a>
+                    <a>
+                        <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
+                        <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
+                    </a>
+                </ul>
+            </div>
+
+        </div>
+        <div class="boxContainer">
+            <table class="elementContainer">
+                <tr>
+                    <td>
+                        <input v-model="searchText" type="text" placeholder="Search" class="search">
+                    </td>
+                    <td>
+                        <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- login  -->
+        <div v-if="clickLogin" class="center">
+            <h1>Login</h1>
+            <div @click="clickCloseBTN" class="close">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form method="post">
+                <div class="txt_field">
+                    <input v-model="userId" type="text" required>
+                    <span></span>
+                    <label>UserID</label>
+                </div>
+                <div class="txt_field">
+                    <input v-model="password" type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member?<a @click="clickSignUp">Signup</a>
+                </div>
+            </form>
+        </div>
+        <!-- sign up  -->
+        <div v-if="clickSignup" class="center">
+            <h1>SignUp</h1>
+            <div @click="clickCloseBTN" class="close">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form method="post">
+                <div class="txt_field">
+                    <input v-model="userId" type="text" required>
+                    <span></span>
+                    <label>UserID</label>
+                </div>
+                <div class="txt_field">
+                    <input v-model="username" type="text" required>
+                    <span></span>
+                    <label>UserName</label>
+                </div>
+                <div class="txt_field">
+                    <input v-model="password" type="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <!-- <div class="pass">Forget Password?</div> -->
+                <input type="submit" value="SignUp">
+                <p></p>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/echarts.min.js"></script>
+<script src="../../static/js/jquery-2.1.4.js"></script>
+<script src="../../static/webhfive/news/js/jquery-weui.js "></script>
+<script src="../../static/js/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="../../static/js/network.js"></script>
+<script>
+    var data = {
+        clickLogin: false,
+        clickSignup: false,
+        isLogin: false,
+        userId: '',
+        password: '',
+        username: '',
+        searchText: '',
+
+    }
+    var vue = new Vue({
+        el: "#app",
+        data: data,
+        mounted: function() {
+            this.click1()
+                // getMoviePosterImg(13282096)
+                // this.chart_movieRate()
+        },
+        methods: {
+            clickLoginBTN() {
+                this.clickSignup = false;
+                this.clickLogin = true;
+
+            },
+            clickSignUp() {
+                this.clickLogin = false;
+                this.clickSignup = true;
+
+            },
+            clickCloseBTN() {
+                this.clickLogin = false;
+                this.clickSignup = false
+            },
+            clickSearchBTN() {
+                let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
+                location.href = url;
+            },
+            click1() {
+                var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
+                var params = url.substr(1); //去掉问号
+                var pa = params.split("&");
+                var s = new Object();
+                console.log(location)
+                for (var i = 0; i < pa.length; i++) {
+                    s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
+                }
+                this.searchText = s.SearchMovie;
+                console.log(this.searchText)
+
+            }
+        }
+    });
+</script>
+
+</html>
