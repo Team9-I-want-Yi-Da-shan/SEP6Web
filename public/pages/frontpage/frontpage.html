@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../static/webhfive/news/css/jquery-weui.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
     <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
     </style>
@@ -101,7 +101,7 @@
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
                 <input type="submit" value="SignUp">
-                <p></p>
+                <p></p><span>&nbsp;</span>
             </form>
         </div>
 
@@ -111,9 +111,15 @@
             <h1>Recommend Movies</h1>
             <div class="recommendMovieRow">
                 <div v-for="movie in recommends" class="recommentMovieContainer">
-                    <img v-bind:src="movie.img">
-                    <h3>{{movie.name}}</h3>
-                    <h4>{{movie.year}}</h4>
+                    <div class="movieImg">
+                        <img v-bind:src="movie.img">
+                    </div>
+
+                    <div class="movieName">
+                        <h3>{{movie.name}}</h3>
+                        <h4>{{movie.year}}</h4>
+                    </div>
+
                 </div>
 
             </div>
@@ -165,16 +171,17 @@
                 "id": 2872732,
                 "name": "Lucy",
                 "year": 2000,
-                "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
-
+                "img": "https://imdb-api.com/images/original/MV5BMjczZmNiZDktNjAxMy00ZjMzLTg5MmYtMzAxMzAwMDQ1ZGY0XkEyXkFqcGdeQXVyMDE0NjUyNg@@._V1_Ratio0.6791_AL_.jpg"
             }, {
                 "id": 4679576,
                 "name": "Bloodhound",
                 "year": 2020,
+                "img": "https://imdb-api.com/images/original/MV5BMDdiM2UwYTctYmRlZi00YmE4LTlhZTAtODhmYjFiMGFlMDcyXkEyXkFqcGdeQXVyMTQ2OTU2OTQ@._V1_Ratio0.7164_AL_.jpg"
             }, {
                 "id": 3380766,
                 "name": "King's Gambit",
                 "year": 2000,
+                img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
             }, {
                 "id": 3278540,
                 "name": "A Nice Girl Like You",
@@ -208,9 +215,13 @@
     var vue = new Vue({
         el: "#app",
         data: data,
+        created: function() {
+            // this.getImagesFromIMDB()
+        },
         mounted: function() {
-            getMoviePosterImg(13282096)
+
             this.chart_movieRate()
+            console.log(this.recommends)
         },
         methods: {
             clickLoginBTN() {
@@ -279,6 +290,28 @@
                 myChart.setOption(option);
             },
 
+            // getApi() {
+            //     $.ajax({
+            //         //你的WordPress安装地址后面跟上注册的自定义 REST API 地址参数即可
+            //         url: 'http://imdb-api.com/en/API/Title/k_3n7lo407/tt13282096',
+            //     })
+
+            //     .done(function(data) {
+            //         var text = `REST API返回的信息。服务器名称：${data.serverName}，时间：${data.lastDate}。`;
+            //         //放到页面底部
+            //         console.log(data);
+            //         $('body').append(text);
+            //     })
+            // }
+            getImagesFromIMDB() {
+                _this = this
+                    // var img = getMoviePosterImg(13282096)
+                for (let index = 0; index < _this.recommends.length; index++) {
+                    var imge = getMoviePosterImg(_this.recommends[index].id)
+                    console.log("!!", imge)
+                    _this.recommends[index].img = imge
+                }
+            }
         }
     });
 </script>

@@ -85,15 +85,27 @@ function getMoviePosterImg(movieId) {
         movieId = PrefixInteger(movieId, initial)
     }
     movieId = "tt" + movieId
-    console.log(movieId.toString())
+    console.log("movieId", movieId.toString())
 
-    getIMDBData({
-        url: "Title/k_3n7lo407/" + movieId,
-        // param: {}
-    }, function(msg) {
-        img = msg.data.image
-        alert("图片", img)
-    })
+    $.ajax({
+            // k_4ivqx8jp
+            //k_3n7lo407
+            url: "http://imdb-api.com/en/API/Title/k_4ivqx8jp/" + movieId,
+            type: "get",
+            data: {},
+            async: false,
+        })
+        .done(function(data) {
+            img = data.image
+                // console.log(img)
+
+        })
+        // .error(function(data) {
+        //     console.log("error", data)
+        //     $.hideLoading();
+        //     $.toptip('Error network', 'error');
+        // })
+    return img;
 }
 
 function PrefixInteger(num, length) {
