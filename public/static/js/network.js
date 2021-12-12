@@ -47,6 +47,8 @@ function getTokenToGetData(ifLog, data, fn) {
         // });
 }
 
+
+
 function getIMDBData(data, fn) {
     var header = "";
     var url = "http://imdb-api.com/en/API/" + data.url;
@@ -78,7 +80,83 @@ function getIMDBData(data, fn) {
         // });
 }
 
+// function getCloudSearch(data) {
+//     var header = "Access-Control-Allow-Origin: *";
+//     // header("Access-Control-Allow-Origin: *");
+//     param = { "searchText": "Lucy" }
+//     $.ajax({
+//         data: JSON.stringify(param),
+//         // k_4ivqx8jp
+//         //k_3n7lo407
+//         //k_0hv922rs
+//         url: "https://europe-west1-mapapi-296515.cloudfunctions.net/searchMovieByKeyword",
+//         type: "post",
+//         header = "Access-Control-Allow-Origin: *",
+//         async: false,
+
+//     })
+
+// .success(function(data) {
+
+//         console.log("success data", data)
+//     })
+//     .error(function(data) {
+//         console.log("error", data)
+//         $.hideLoading();
+//         $.toptip('Error network', 'error');
+//     })
+// return data;
+// }
+
 function getMoviePosterImg(movieId) {
+    movieId = getIMDBMovieId(movieId);
+
+    $.ajax({
+            // k_4ivqx8jp
+            //k_3n7lo407
+            //k_0hv922rs
+            url: "http://imdb-api.com/en/API/Title/k_3n7lo407/" + movieId,
+            type: "get",
+            data: {},
+            async: false,
+        })
+        .done(function(data) {
+            img = data
+                // console.log(img)
+        })
+        .error(function(data) {
+            console.log("error", data)
+            $.hideLoading();
+            $.toptip('Error network', 'error');
+        })
+    return img;
+}
+
+function getPeopleData(peopleId) {
+    peopleId = getIMDBPeopleId(peopleId);
+
+    $.ajax({
+            // k_4ivqx8jp
+            //k_3n7lo407
+            //k_0hv922rs
+            url: "https://imdb-api.com/en/API/Name/k_4ivqx8jp/" + peopleId,
+            type: "get",
+            data: {},
+            async: false,
+        })
+        .done(function(data) {
+            img = data;
+        })
+        .error(function(data) {
+            console.log("error", data)
+            $.hideLoading();
+            $.toptip('Error network', 'error');
+        })
+    return img;
+}
+
+
+function getIMDBMovieId(movieId) {
     const len = movieId.toString().length
     if (len < 7) {
         const initial = 7
@@ -86,26 +164,18 @@ function getMoviePosterImg(movieId) {
     }
     movieId = "tt" + movieId
     console.log("movieId", movieId.toString())
+    return movieId;
+}
 
-    $.ajax({
-            // k_4ivqx8jp
-            //k_3n7lo407
-            url: "http://imdb-api.com/en/API/Title/k_4ivqx8jp/" + movieId,
-            type: "get",
-            data: {},
-            async: false,
-        })
-        .done(function(data) {
-            img = data.image
-                // console.log(img)
-
-        })
-        // .error(function(data) {
-        //     console.log("error", data)
-        //     $.hideLoading();
-        //     $.toptip('Error network', 'error');
-        // })
-    return img;
+function getIMDBPeopleId(movieId) {
+    const len = movieId.toString().length
+    if (len < 7) {
+        const initial = 7
+        movieId = PrefixInteger(movieId, initial)
+    }
+    movieId = "nm" + movieId
+    console.log("movieId", movieId.toString())
+    return movieId;
 }
 
 function PrefixInteger(num, length) {

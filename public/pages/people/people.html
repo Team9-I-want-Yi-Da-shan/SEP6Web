@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Detail-BestMovies</title>
+    <title>People-BestMovies</title>
     <link rel="stylesheet" href="../../static/webhfive/news/lib/weui.min.css">
     <link rel="stylesheet" href="../../static/webhfive/news/css/jquery-weui.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
     <link rel="stylesheet" href="../frontpage/frontpage.css" />
-    <link rel="stylesheet" href="detailpage.css" />
+    <link rel="stylesheet" href="../movieDetail/detailpage.css" />
 </head>
 
 <body ontouchstart>
@@ -106,45 +106,45 @@
         <!-- detail  -->
         <div class="movieTitle">
             <div class="movieName">
-                <h1>{{movie.name}} <span>({{movie.year}})</span></h1>
+                <h1>{{people.name}} </h1>
             </div>
             <div class="rate">
-                <h1>Rating:
-                    <span>{{movie.rating}}<b>/10</b></span>
+                <h1>Birth:
+                    <span>{{people.birth}} </span>
+
                 </h1>
-                <h2>Your Rating is</h2>
+                <!-- <h2>Your Rating is</h2> -->
             </div>
 
         </div>
         <div class="detailContainer">
             <div class="image">
 
-                <img v-bind:src="movie.img">
+                <img v-bind:src="people.img">
             </div>
             <div class="wordContainer">
                 <div class="people">
                     <div class="directorContainer">
-                        <span>Director: </span>
-                        <a v-for="name in directors">{{name.name}}</a>
+                        <span>Awards: </span>
+                        <a>{{people.award}}</a>
 
                     </div>
-                    <div class="directorContainer">
+                    <!-- <div class="directorContainer">
                         <span>Stars: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <a v-for="name in stars" @click="clickPeople(name.id)">{{name.name}}</a>
-
-
-                    </div>
+                        <a v-for="name in stars">{{name.name}}</a>
+                    </div> -->
 
                 </div>
                 <div class="intro">
-                    <p>{{movie.plot}}</p>
-
+                    <p>{{people.summary}}</p>
                 </div>
             </div>
 
 
         </div>
-        <div>Comment</div>
+        <div class="relate">
+            <h1>Relate Movies</h1>
+        </div>
     </div>
 </body>
 <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
@@ -163,30 +163,22 @@
         password: '',
         username: '',
         searchText: '',
-        movieID: 0,
-        movie: {
-            id: 2872732,
-            name: ' ',
-            year: 0,
-            rating: 7.5,
-            // plot: "It was supposed to be a simple job. All Lucy had to do was deliver a mysterious briefcase to Mr. Jang. But immediately Lucy is caught up in a nightmarish deal where she is captured and turned into a drug mule for a new and powerful synthetic drug. When the bag she is carrying inside of her stomach leaks, Lucy's body undergoes unimaginable changes that begins to unlock her mind's full potential. With her new-found powers, Lucy turns into a merciless warrior intent on getting back at her captors. She receives invaluable help from Professor Norman, the leading authority on the human mind, and French police captain Pierre Del Rio.",
-            img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
-        },
-        directors: [{
-                id: 108,
-                name: 'Luc Besson',
-                birth: 1959
-            }
-
-        ],
-        stars: [{
+        people: {
             id: 424060,
             name: 'Scarlett Johansson',
-            birth: '1984'
+            birth: "1984",
+            img: "https://imdb-api.com/images/original/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_Ratio0.8202_AL_.jpg",
+            summary: "Scarlett Ingrid Johansson was born on November 22, 1984 in Manhattan, New York City, New York. Her mother, Melanie Sloan is from a Jewish family from the Bronx and her father, Karsten Johansson is a Danish-born architect from Copenhagen. She has a sister, Vanessa Johansson, who is also an actress, a brother, Adrian, a twin brother, Hunter Johansson...",
+            award: "Nominated for 2 Oscars. Another 63 wins & 229 nominations."
+        },
+        relateMovies: [{
+            id: 1798709,
+            name: "Her",
+            year: 2013
         }, {
-            id: 151,
-            name: 'Morgan Freeman',
-            birth: 1937
+            id: 0335266,
+            name: "Lost in Translation",
+            year: 2003
         }]
 
     }
@@ -195,7 +187,7 @@
         data: data,
         mounted: function() {
             this.getUrlData()
-            getMoviePosterImg(this.movieID)
+                // getMoviePosterImg(13282096)
                 // this.chart_movieRate()
         },
         methods: {
@@ -217,11 +209,6 @@
                 let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
-            clickPeople(peopleId) {
-                console.log(peopleId)
-                let url = "../people/people.html?" + "nameId=" + peopleId;
-                location.href = url;
-            },
             getUrlData() {
                 var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
                 var params = url.substr(1); //去掉问号
@@ -231,16 +218,10 @@
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
-
-                this.movieID = s.MovieId;
-                console.log(this.movieID)
-                let moviedata = getMoviePosterImg(s.MovieId);
-                this.movie.plot = moviedata.plot;
-                this.movie.img = moviedata.image;
-                this.movie.name = moviedata.title;
-                this.directors = moviedata.directorList;
-                this.stars = moviedata.starList;
+                // this.searchText = s.MovieId;
                 // console.log(this.searchText)
+                let data = getIMDBPeopleId(s.nameId);
+                console(data);
 
             }
         }
