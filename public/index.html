@@ -3,17 +3,18 @@
 
 <head>
     <title>BestMovies</title>
-    <link rel="stylesheet" href="../../static/webhfive/news/lib/weui.min.css">
-    <link rel="stylesheet" href="../../static/webhfive/news/css/jquery-weui.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
-    <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
+    <link rel="stylesheet" href=" static/webhfive/news/lib/weui.min.css">
+    <link rel="stylesheet" href=" static/webhfive/news/css/jquery-weui.css">
+    <link rel="stylesheet" type="text/css" href=" static/css/lib/common.css" />
+    <link rel="stylesheet" type="text/css" href="static/iconfont/iconfont.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
-    <link rel="stylesheet" href="frontpage.css" />
+    <link rel="stylesheet" href="pages/frontpage/frontpage.css" />
 </head>
 
 <body ontouchstart>
@@ -150,12 +151,12 @@
 
 </html>
 <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
-<script src="../../static/js/echarts.min.js"></script>
-<script src="../../static/js/jquery-2.1.4.js"></script>
-<script src="../../static/webhfive/news/js/jquery-weui.js "></script>
-<script src="../../static/js/vue.min.js"></script>
+<script src=" static/js/echarts.min.js"></script>
+<script src=" static/js/jquery-2.1.4.js"></script>
+<script src=" static/webhfive/news/js/jquery-weui.js "></script>
+<script src=" static/js/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="../../static/js/network.js"></script>
+<script src=" static/js/network.js"></script>
 
 <script>
     var data = {
@@ -245,12 +246,12 @@
                 this.clickSignup = false
             },
             clickSearchBTN() {
-                let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
+                let url = "pages/searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
             clickDetail(id) {
                 console.log("go to", id);
-                let url = "../movieDetail/detailpage.html?" + "MovieId=" + id;
+                let url = "pages/movieDetail/detailpage.html?" + "MovieId=" + id;
                 location.href = url;
             },
             getSearch() {

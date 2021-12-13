@@ -115,7 +115,7 @@ function getMoviePosterImg(movieId) {
             // k_4ivqx8jp
             //k_3n7lo407
             //k_0hv922rs
-            url: "http://imdb-api.com/en/API/Title/k_3n7lo407/" + movieId,
+            url: "http://imdb-api.com/en/API/Title/k_0hv922rs/" + movieId,
             type: "get",
             data: {},
             async: false,
