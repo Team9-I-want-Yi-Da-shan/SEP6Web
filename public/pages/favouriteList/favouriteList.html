@@ -14,80 +14,73 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
     <link rel="stylesheet" href="../frontpage/frontpage.css" />
-</head>
+    <link rel="stylesheet" href="favouriteList.css" </head>
 
-<body ontouchstart>
-    <div class="page__bd" id="app">
-        <!-- head -->
+    <body ontouchstart>
+        <div class="page__bd" id="app">
+            <!-- head -->
 
-        <div class="header">
-            <div class="left_header">
-                <div class="logo_container">
-                    <h1 class="title"><a href="javascript:window.history.go(-1)">Best<span>Movies</span></a></h1>
-                </div>
+            <div class="header">
+                <div class="left_header">
+                    <div class="logo_container">
+                        <h1 class="title"><a href="javascript:window.history.go(-1)">Best<span>Movies</span></a></h1>
+                    </div>
 
-                <ul class="navigation">
-                    <a>
-                        <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
-                        <li v-if="isLogin">{{username}}</li>
-                    </a>
-                    <a>
-                        <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
-                        <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
-                    </a>
-                </ul>
-            </div>
-
-        </div>
-        <div class="boxContainer">
-            <table class="elementContainer">
-                <tr>
-                    <td>
-                        <input v-model="searchText" type="text" placeholder="Search" class="search">
-                    </td>
-                    <td>
-                        <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-        <!-- recommend movies -->
-        <section>
-            <h1>Recommend Movies</h1>
-            <div class="recommendMovieRow">
-                <div v-for="movie in recommends" class="recommentMovieContainer">
-                    <img v-bind:src="movie.img">
-                    <h3>{{movie.name}}</h3>
-                    <h4>{{movie.year}}</h4>
+                    <ul class="navigation">
+                        <a>
+                            <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
+                            <li v-if="isLogin">{{username}}</li>
+                        </a>
+                        <a>
+                            <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
+                            <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
+                        </a>
+                    </ul>
                 </div>
 
             </div>
-        </section>
-
-        <!-- echarts -->
-        <section>
-            <h1>Movie Analysis</h1>
-
-            <div class="row">
-                <div class="col-md-6" id="chart_movieRate">Chart1</div>
-                <div class="col-md-6" id="chart_movieCount">Chart2</div>
+            <div class="boxContainer">
+                <table class="elementContainer">
+                    <tr>
+                        <td>
+                            <input v-model="searchText" type="text" placeholder="Search" class="search">
+                        </td>
+                        <td>
+                            <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
 
+            <!-- recommend movies -->
+            <section>
+                <h1>Favourite List</h1>
+                <div class="recommendMovieRow">
+                    <div v-for="movie in favouriteTop5" class="recommentMovieContainer">
+                        <img v-bind:src="movie.img">
+                        <h3>{{movie.name}}</h3>
+                        <h4>{{movie.year}}</h4>
+                        <h4>Your rating is 7.8</h4>
+                    </div>
 
-        </section>
+                </div>
+                <div>
+                    <h2>ff</h2>
+                </div>
+            </section>
 
-        <div class="weui-footer">
-            <p class="weui-footer__links">
-                <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
-                <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
-            </p>
-            <p class="weui-footer__text">Copyright © 2021-2022</p>
+
+
+            <div class="weui-footer">
+                <p class="weui-footer__links">
+                    <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
+                    <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
+                </p>
+                <p class="weui-footer__text">Copyright © 2021-2022</p>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
 <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
@@ -108,7 +101,7 @@
         username: '',
         searchText: '',
         img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
-        recommends: [{
+        favouriteTop5: [{
                 "id": 2872732,
                 "name": "Lucy",
                 "year": 2000,
@@ -130,13 +123,26 @@
                 "id": 65005,
                 "name": "Oso yparhei erotas",
                 "year": 2019,
-            }, {
-                "id": 13282096,
-                "name": "The Cage of Life",
-                "year": 2010,
             }
 
         ],
+        favouriteList: [{
+            "id": 4679576,
+            "name": "Bloodhound",
+            "year": 2020,
+        }, {
+            "id": 3380766,
+            "name": "King's Gambit",
+            "year": 2000,
+        }, {
+            "id": 3278540,
+            "name": "A Nice Girl Like You",
+            "year": 2002,
+        }, {
+            "id": 65005,
+            "name": "Oso yparhei erotas",
+            "year": 2019,
+        }]
 
 
     }

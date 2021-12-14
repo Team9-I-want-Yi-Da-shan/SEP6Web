@@ -71,7 +71,7 @@
                     <label>Password</label>
                 </div>
                 <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
-                <input type="submit" value="Login">
+                <input type="button" value="Login">
                 <div class="signup_link">
                     Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
@@ -101,7 +101,7 @@
                     <label>Password</label>
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
-                <input type="submit" value="SignUp">
+                <input type="button" value="SignUp" @click="signUpSubmitBTN">
                 <p></p><span>&nbsp;</span>
             </form>
         </div>
@@ -166,6 +166,9 @@
         userId: '',
         password: '',
         username: '',
+        signupID: '',
+        signupname: '',
+        signupPwd: '',
         searchText: '',
         img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
         recommends: [{
@@ -218,40 +221,48 @@
         data: data,
         created: function() {
 
-            // this.getSearch();
-            // this.getCloudSearch();
         },
         beforeMount: function() {
-            this.getCloudSearch();
-            this.getImagesFromIMDB()
+            // this.getImagesFromIMDB()
         },
         mounted: function() {
+            this.getCloudSearch();
 
             this.chart_movieRate()
             console.log(this.recommends)
+        },
+        updated: function() {
+
         },
         methods: {
             clickLoginBTN() {
                 this.clickSignup = false;
                 this.clickLogin = true;
-
             },
             clickSignUp() {
                 this.clickLogin = false;
                 this.clickSignup = true;
-
             },
             clickCloseBTN() {
                 this.clickLogin = false;
                 this.clickSignup = false
+            },
+            loginSubmitBTN() {
+                alert(this.userId)
+            },
+            signUpSubmitBTN() {
+                console.log(this.password)
             },
             clickSearchBTN() {
                 let url = "pages/searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
             clickDetail(id) {
-                console.log("go to", id);
+
+                var islogin = data.isLogin
                 let url = "pages/movieDetail/detailpage.html?" + "MovieId=" + id;
+                // document.cookie = "name:" + this.username + "&userid:" + this.userId;
+                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + islogin;
                 location.href = url;
             },
             getSearch() {
@@ -259,17 +270,17 @@
                 console.log(data)
             },
             getCloudSearch() {
-                var header = "Access-Control-Allow-Origin: *";
+                // var header = "Access-Control-Allow-Origin: *";
                 // header("Access-Control-Allow-Origin: *");
                 param = {
-                    "searchText": "Lucy"
+                    "searchText": ""
                 }
                 $.ajax({
-                    data: JSON.stringify(param),
+                    data: param,
                     // k_4ivqx8jp
                     //k_3n7lo407
                     //k_0hv922rs
-                    url: "http://europe-west1-mapapi-296515.cloudfunctions.net/searchMovieByKeyword",
+                    url: "https://europe-west1-mapapi-296515.cloudfunctions.net/searchPeople",
                     type: 'POST',
                     // header = "Access-Control-Allow-Origin: *",
                     success: function(data) {
@@ -284,6 +295,7 @@
                 });
 
             },
+
             //Echart
             chart_movieRate() {
                 var load_lief = document.getElementById("chart_movieRate");

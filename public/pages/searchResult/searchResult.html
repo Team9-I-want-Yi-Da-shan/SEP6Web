@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
     <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
     </style>
@@ -111,22 +112,18 @@
             <div class="line"></div>
             <div class="resultDetail">
                 <h1>Movies</h1>
-                <div class="detailLine">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                    <p>{{movieResults[0].name}}</p>
-                    <p><span>{{movieResults[0].year}}</span></p>
+                <div class="detailLine" v-for="item in movieResults" @click="clickMovieDetail(item.id)">
+                    <!-- <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"> -->
+                    <p>{{item.title}}</p>
+                    <p><span>{{item.year}}</span></p>
                 </div>
-                <div class="detailLine">
-                    <img src="https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg">
-                    <p>{{movieResults[0].name}s}</p>
-                    <p><span>{{movieResults[0].year}}</span></p>
-                </div>
+
             </div>
             <div class="resultDetail">
                 <h1>Names</h1>
-                <div class="detailLine">
-                    <p>{{movieResults[0].name}}</p>
-                    <p><span>{{movieResults[0].year}}</span></p>
+                <div class="detailLine" v-for="item in names" @click="clickPeopleDetail(item.id)">
+                    <p> {{item.name}}</p>
+
                 </div>
             </div>
         </div>
@@ -154,18 +151,8 @@
 
         searchResult: '',
         hasResult: true,
-        movieResults: [{
-            id: 232344,
-            name: "lucy",
-            year: 2010,
-            img: '',
-            director: 'Tom director'
-        }],
-        names: [{
-            id: 529960,
-            name: 'Eva López Sánchez',
-            year: 1954
-        }]
+        movieResults: [],
+        names: []
 
     }
     var vue = new Vue({
@@ -176,9 +163,11 @@
             this.getSearchText()
         },
         mounted: function() {
-            // this.click1()
-            // getMoviePosterImg(13282096)
-            // this.chart_movieRate()
+            this.getSearchPeople()
+            this.getSearchMovie()
+                // this.click1()
+                // getMoviePosterImg(13282096)
+                // this.chart_movieRate()
         },
         methods: {
             clickLoginBTN() {
@@ -211,7 +200,50 @@
                 this.searchResult = s.SearchMovie;
                 console.log(this.searchResult)
 
-            }
+            },
+            getSearchPeople() {
+                _this = this
+                if (this.searchResult != "") {
+                    console.log(this.searchResult);
+                    param = {
+                            "searchText": this.searchResult
+                        }
+                        // new Promise(function(resolve, reject) {
+                    getCloudSearch("searchPeople", param, function(res) {
+                            console.log("fun", res)
+                            _this.names = res
+                        })
+                        // })
+                }
+            },
+            getSearchMovie() {
+                _this = this
+                if (this.searchResult != "") {
+                    console.log(this.searchResult);
+                    param = {
+                            "searchText": this.searchResult
+                        }
+                        // new Promise(function(resolve, reject) {
+                    getCloudSearch("searchMovie", param, function(res) {
+                            console.log("fun", res)
+                            _this.movieResults = res
+                        })
+                        // })
+                }
+            },
+            clickMovieDetail(id) {
+
+                let url = "../movieDetail/detailpage.html?" + "MovieId=" + id;
+                // document.cookie = "name:" + this.username + "&userid:" + this.userId;
+                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + this.islogin;
+                location.href = url;
+            },
+            clickPeopleDetail(id) {
+                let url = "../people/people.html?" + "PeopleId=" + id;
+                // document.cookie = "name:" + this.username + "&userid:" + this.userId;
+                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + this.islogin;
+                location.href = url;
+            },
         }
     });
 </script>

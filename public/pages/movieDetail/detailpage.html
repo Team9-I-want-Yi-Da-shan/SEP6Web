@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
     <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
     </style>
@@ -195,7 +196,14 @@
         data: data,
         mounted: function() {
             this.getUrlData()
-            getMoviePosterImg(this.movieID)
+            var params = document.cookie;
+            var pa = params.split("&");
+            var s = new Object();
+            for (var i = 0; i < pa.length; i++) {
+                s[pa[i].split(":")[0]] = pa[i].split(":")[1];
+            }
+            console.log("!!!!!", s.username, s.userid, s.isLogin)
+                // getMoviePosterImg(this.movieID)
                 // this.chart_movieRate()
         },
         methods: {
@@ -218,8 +226,8 @@
                 location.href = url;
             },
             clickPeople(peopleId) {
-                console.log(peopleId)
-                let url = "../people/people.html?" + "nameId=" + peopleId;
+                console.log("CLICK", peopleId)
+                let url = "../people/people.html?" + "PeopleId=" + peopleId;
                 location.href = url;
             },
             getUrlData() {
@@ -240,6 +248,7 @@
                 this.movie.name = moviedata.title;
                 this.directors = moviedata.directorList;
                 this.stars = moviedata.starList;
+                this.movie.year = moviedata.year;
                 // console.log(this.searchText)
 
             }

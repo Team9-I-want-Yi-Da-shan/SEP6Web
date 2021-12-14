@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/lib/common.css" />
     <link rel="stylesheet" type="text/css" href="../../static/iconfont/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../static/webhfive/news/css/bootstrap.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Smooch&display=swap');
     </style>
@@ -138,13 +139,15 @@
                 <div class="intro">
                     <p>{{people.summary}}</p>
                 </div>
+                <div class="relate">
+                    <h1>Relate Movies</h1>
+                    <div v-for="itiem in relateMovies">
+                        {{itiem.title}} {{itiem.year}}
+                    </div>
+                </div>
             </div>
-
-
         </div>
-        <div class="relate">
-            <h1>Relate Movies</h1>
-        </div>
+
     </div>
 </body>
 <script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
@@ -167,20 +170,21 @@
             id: 424060,
             name: 'Scarlett Johansson',
             birth: "1984",
-            img: "https://imdb-api.com/images/original/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_Ratio0.8202_AL_.jpg",
-            summary: "Scarlett Ingrid Johansson was born on November 22, 1984 in Manhattan, New York City, New York. Her mother, Melanie Sloan is from a Jewish family from the Bronx and her father, Karsten Johansson is a Danish-born architect from Copenhagen. She has a sister, Vanessa Johansson, who is also an actress, a brother, Adrian, a twin brother, Hunter Johansson...",
+            img: "",
+            summary: "",
             award: "Nominated for 2 Oscars. Another 63 wins & 229 nominations."
         },
-        relateMovies: [{
-            id: 1798709,
-            name: "Her",
-            year: 2013
-        }, {
-            id: 0335266,
-            name: "Lost in Translation",
-            year: 2003
-        }]
-
+        relateMovies: [
+            //     {
+            //     id: 1798709,
+            //     name: "Her",
+            //     year: 2013
+            // }, {
+            //     id: 0335266,
+            //     name: "Lost in Translation",
+            //     year: 2003
+            // }
+        ]
     }
     var vue = new Vue({
         el: "#app",
@@ -214,14 +218,24 @@
                 var params = url.substr(1); //去掉问号
                 var pa = params.split("&");
                 var s = new Object();
-                console.log(location)
+
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
-                // this.searchText = s.MovieId;
+                // this.searchText = s.PeopleId;
                 // console.log(this.searchText)
-                let data = getIMDBPeopleId(s.nameId);
-                console(data);
+                // let data = getIMDBPeopleId(s.nameId);
+
+                let data = getPeopleData(s.PeopleId);
+                this.people.img = data.image;
+                this.people.name = data.name;
+                this.people.summary = data.summary;
+                this.people.award = data.award;
+                this.relateMovies = data.castMovies;
+                this.birth = data.birthDate;
+                console.log(data)
+
+
 
             }
         }
