@@ -18,6 +18,7 @@
 </head>
 
 <body ontouchstart>
+    <p>Max</p>
     <div class="page__bd" id="app">
         <div class="header">
             <div class="left_header">
@@ -115,7 +116,7 @@
                     </div>
 
                     <div class="movieName">
-                        <h3>{{movie.name}}</h3>
+                        <h3>{{movie.title}}</h3>
                         <h4>{{movie.year}}</h4>
                     </div>
 
@@ -148,7 +149,7 @@
 </body>
 
 </html>
-<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="static/js/all.min.js" crossorigin="anonymous"></script>
 <script src=" static/js/echarts.min.js"></script>
 <script src=" static/js/jquery-2.1.4.js"></script>
 <script src=" static/webhfive/news/js/jquery-weui.js "></script>
@@ -169,34 +170,35 @@
         signupPwd: '',
         searchText: '',
         img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
-        recommends: [{
-                "id": 2872732,
-                "name": "Lucy",
-                "year": 2000,
-                // "img": "https://imdb-api.com/images/original/MV5BMjczZmNiZDktNjAxMy00ZjMzLTg5MmYtMzAxMzAwMDQ1ZGY0XkEyXkFqcGdeQXVyMDE0NjUyNg@@._V1_Ratio0.6791_AL_.jpg"
-            }, {
-                "id": 4679576,
-                "name": "Bloodhound",
-                "year": 2020,
-                // "img": "https://imdb-api.com/images/original/MV5BMDdiM2UwYTctYmRlZi00YmE4LTlhZTAtODhmYjFiMGFlMDcyXkEyXkFqcGdeQXVyMTQ2OTU2OTQ@._V1_Ratio0.7164_AL_.jpg"
-            }, {
-                "id": 3380766,
-                "name": "King's Gambit",
-                "year": 2000,
-                // img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
-            }, {
-                "id": 3278540,
-                "name": "A Nice Girl Like You",
-                "year": 2002,
-            }, {
-                "id": 65005,
-                "name": "Oso yparhei erotas",
-                "year": 2019,
-            }, {
-                "id": 13282096,
-                "name": "The Cage of Life",
-                "year": 2010,
-            }
+        recommends: [
+            // {
+            //     "id": 2872732,
+            //     "title": "Lucy",
+            //     "year": 2000,
+            //     // "img": "https://imdb-api.com/images/original/MV5BMjczZmNiZDktNjAxMy00ZjMzLTg5MmYtMzAxMzAwMDQ1ZGY0XkEyXkFqcGdeQXVyMDE0NjUyNg@@._V1_Ratio0.6791_AL_.jpg"
+            // }, {
+            //     "id": 4679576,
+            //     "title": "Bloodhound",
+            //     "year": 2020,
+            //     // "img": "https://imdb-api.com/images/original/MV5BMDdiM2UwYTctYmRlZi00YmE4LTlhZTAtODhmYjFiMGFlMDcyXkEyXkFqcGdeQXVyMTQ2OTU2OTQ@._V1_Ratio0.7164_AL_.jpg"
+            // }, {
+            //     "id": 3380766,
+            //     "title": "King's Gambit",
+            //     "year": 2000,
+            //     // img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
+            // }, {
+            //     "id": 3278540,
+            //     "title": "A Nice Girl Like You",
+            //     "year": 2002,
+            // }, {
+            //     "id": 65005,
+            //     "title": "Oso yparhei erotas",
+            //     "year": 2019,
+            // }, {
+            //     "id": 13282096,
+            //     "title": "The Cage of Life",
+            //     "year": 2010,
+            // }
 
         ],
 
@@ -221,11 +223,13 @@
 
         },
         beforeMount: function() {
-            this.getImagesFromIMDB()
+            this.getRecommendMovies()
+                // this.getCookieData()
+                // this.getRecommendMovies()
+                // this.getImagesFromIMDB()
         },
         mounted: function() {
             this.chart_movieRate()
-            console.log(this.recommends)
         },
         updated: function() {
 
@@ -252,15 +256,19 @@
                         "username": id,
                         "password": pwd
                     }
-                    getCloudSearch("login", param, function(res) {
+                    getCloudSearch("login", 'POST', param, function(res) {
                         console.log("login res", res)
                             // _this.names = res
                         if (res.requestIsSucceed) {
                             _this.username = res.nickname;
                             _this.isLogin = true;
                             _this.userId = res.username;
+                            _this.clickLogin = false;
+                            $.toptip('Login success' + " Hi " + res.nickname, 'success');
+                            document.cookie = "username:" + _this.username + "&userid:" + _this.userId + "&isLogin:" + true;
                         } else {
-                            alert("Wrong")
+
+                            $.toptip('Wrong password or number', 'warn');
                         }
                     })
                 }
@@ -274,16 +282,35 @@
                         "nickname": username,
                         "password": pwd
                     }
-                    getCloudSearch("register", param, function(res) {
+                    getCloudSearch("register", 'POST', param, function(res) {
                         console.log("register res", res)
                             // _this.names = res
                         if (res.requestIsSucceed) {
+                            $.toptip('Register success' + " Hi " + username, 'success');
 
                         } else {
-                            alert("Wrong")
+                            $.toptip('Register failed' + res.aresponseMessage, 'warn');
                         }
                     })
                 }
+            },
+            getCookieData() {
+                var params = document.cookie;
+                console.log("cookie ", params)
+                var pa = params.split("&");
+                var s = new Object();
+                for (var i = 0; i < pa.length; i++) {
+                    s[pa[i].split(":")[0]] = pa[i].split(":")[1];
+                }
+                console.log("Cookieccc", s.username)
+                if (s.username != '' && s.userid != '' && isLogin == true) {
+                    this.isLogin = s.isLogin;
+                    this.username = s.username;
+                    this.userId = s.userid
+                }
+
+                document.getElementById("name").value = s.name;
+                document.getElementById("pwd").value = s.pwd;
             },
             clickFavourite(userId) {
                 console.log("Fav", userId);
@@ -293,11 +320,10 @@
                 location.href = url;
             },
             clickDetail(id) {
-
                 var islogin = data.isLogin
                 let url = "pages/movieDetail/detailpage.html?" + "MovieId=" + id;
                 // document.cookie = "name:" + this.username + "&userid:" + this.userId;
-                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + islogin;
+                document.cookie = "username:" + this.username + "&userid:" + this.userId + "&isLogin:" + islogin;
                 location.href = url;
             },
 
@@ -349,27 +375,29 @@
                 myChart.setOption(option);
             },
 
-            // getApi() {
-            //     $.ajax({
-            //         //你的WordPress安装地址后面跟上注册的自定义 REST API 地址参数即可
-            //         url: 'http://imdb-api.com/en/API/Title/k_3n7lo407/tt13282096',
-            //     })
 
-            //     .done(function(data) {
-            //         var text = `REST API返回的信息。服务器名称：${data.serverName}，时间：${data.lastDate}。`;
-            //         //放到页面底部
-            //         console.log(data);
-            //         $('body').append(text);
-            //     })
-            // }
+
+
+            //Get 10 movies from cloud
+            getRecommendMovies() {
+                _this = this;
+                getCloudSearch("MovieRecommendation", 'GET', undefined, function(res) {
+                    console.log("Recommends", res)
+                    _this.recommends = res;
+                    setTimeout(_this.getImagesFromIMDB(), 500)
+
+                })
+            },
             getImagesFromIMDB() {
-                _this = this
-                    // var img = getMoviePosterImg(13282096)
-                for (let index = 0; index < _this.recommends.length; index++) {
-                    var imge = getMoviePosterImg(_this.recommends[index].id).image;
+                // this.getRecommendMovies()
+
+                for (let index = 0; index < this.recommends.length; index++) {
+                    var imge = getMoviePosterImg(this.recommends[index].id).image;
                     console.log("!!", imge)
-                    _this.recommends[index].img = imge
+                    this.recommends[index].img = imge
                 }
+
+
             }
         }
     });

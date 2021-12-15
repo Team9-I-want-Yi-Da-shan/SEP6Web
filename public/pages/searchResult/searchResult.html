@@ -52,7 +52,7 @@
             </table>
         </div>
         <!-- login  -->
-        <div v-if="clickLogin" class="center">
+        <div v-show="clickLogin" class="center" v-cloak>
             <h1>Login</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -70,14 +70,14 @@
                     <label>Password</label>
                 </div>
                 <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
-                <input type="submit" value="Login">
+                <input type="button" value="Login" @click="loginSubmitBTN(userId,password)">
                 <div class="signup_link">
                     Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
             </form>
         </div>
         <!-- sign up  -->
-        <div v-if="clickSignup" class="center">
+        <div v-show="clickSignup" class="center" v-cloak>
             <h1>SignUp</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -100,8 +100,8 @@
                     <label>Password</label>
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
-                <input type="submit" value="SignUp">
-                <p></p>
+                <input type="button" value="SignUp" @click="signUpSubmitBTN(userId,username,password)">
+                <p></p><span>&nbsp;</span>
             </form>
         </div>
         <div class="resultContainer">
@@ -131,7 +131,7 @@
 
     </div>
 </body>
-<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/all.min.js" crossorigin="anonymous"></script>
 <script src="../../static/js/echarts.min.js"></script>
 <script src="../../static/js/jquery-2.1.4.js"></script>
 <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
@@ -159,7 +159,7 @@
         el: "#app",
         data: data,
         created: function() {
-
+            getCookieLoginData(this)
             this.getSearchText()
         },
         mounted: function() {
@@ -188,6 +188,51 @@
                 let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
+            loginSubmitBTN(id, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "") {
+                    param = {
+                        "username": id,
+                        "password": pwd
+                    }
+                    getCloudSearch("login", 'POST', param, function(res) {
+                        console.log("login res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            _this.username = res.nickname;
+                            _this.isLogin = true;
+                            _this.userId = res.username;
+                            _this.clickLogin = false;
+                            $.toptip('Login success' + " Hi " + res.nickname, 'success');
+                        } else {
+                            alert("Wrong")
+                            $.toptip('Wrong password or number', 'warn');
+                        }
+                    })
+                }
+            },
+            signUpSubmitBTN(id, username, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "" && username != "") {
+                    param = {
+                        "username": id,
+                        "nickname": username,
+                        "password": pwd
+                    }
+                    getCloudSearch("register", 'POST', param, function(res) {
+                        console.log("register res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            $.toptip('Register success' + " Hi " + username, 'success');
+
+                        } else {
+                            $.toptip('Register failed' + res.aresponseMessage, 'warn');
+                        }
+                    })
+                }
+            },
             getSearchText() {
                 var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
                 var params = url.substr(1); //去掉问号
@@ -209,7 +254,7 @@
                             "searchText": this.searchResult
                         }
                         // new Promise(function(resolve, reject) {
-                    getCloudSearch("searchPeople", param, function(res) {
+                    getCloudSearch("searchPeople", 'POST', param, function(res) {
                             console.log("fun", res)
                             _this.names = res
                         })
@@ -224,7 +269,7 @@
                             "searchText": this.searchResult
                         }
                         // new Promise(function(resolve, reject) {
-                    getCloudSearch("searchMovie", param, function(res) {
+                    getCloudSearch("searchMovie", 'POST', param, function(res) {
                             console.log("fun", res)
                             _this.movieResults = res
                         })
@@ -235,13 +280,13 @@
 
                 let url = "../movieDetail/detailpage.html?" + "MovieId=" + id;
                 // document.cookie = "name:" + this.username + "&userid:" + this.userId;
-                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + this.islogin;
+
                 location.href = url;
             },
             clickPeopleDetail(id) {
                 let url = "../people/people.html?" + "PeopleId=" + id;
                 // document.cookie = "name:" + this.username + "&userid:" + this.userId;
-                document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + this.islogin;
+
                 location.href = url;
             },
         }

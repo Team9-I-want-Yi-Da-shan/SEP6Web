@@ -1,7 +1,8 @@
  // k_4ivqx8jp/
  //k_3n7lo407/
  //k_0hv922rs/
- var tokenIMDB = 'k_4ivqx8jp/'
+ //k_cn21q8tl
+ var tokenIMDB = 'k_cn21q8tl/'
  var cloudUrl = "https://europe-west1-mapapi-296515.cloudfunctions.net/"
 
 
@@ -40,14 +41,14 @@
  }
 
 
- function getCloudSearch(url, param, fun) {
+ function getCloudSearch(url, types, param, fun) {
      // var header = "Access-Control-Allow-Origin: *";
      // header("Access-Control-Allow-Origin: *");
 
      $.ajax({
          data: param,
          url: cloudUrl + url,
-         type: 'POST',
+         type: types,
          success: function(res) {
              fun(res)
          },
@@ -170,4 +171,22 @@
          num = "0" + num;
      }
      return num;
+ }
+
+ // Function for url
+ function getCookieLoginData(_this) {
+     var params = document.cookie;
+     var pa = params.split("&");
+     var s = new Object();
+     for (var i = 0; i < pa.length; i++) {
+         s[pa[i].split(":")[0]] = pa[i].split(":")[1];
+     }
+     console.log("Read cookie ", s.username + s.userid + s.isLogin)
+     if (s.isLogin == "true") {
+         console.log("??????????????")
+         _this.isLogin = s.isLogin;
+         _this.username = s.username;
+         _this.userId = s.userid
+     }
+
  }

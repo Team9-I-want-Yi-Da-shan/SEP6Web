@@ -14,76 +14,76 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
 
     <link rel="stylesheet" href="../frontpage/frontpage.css" />
-    <link rel="stylesheet" href="favouriteList.css" </head>
+    <link rel="stylesheet" href="favouriteList.css"> </head>
 
-    <body ontouchstart>
-        <div class="page__bd" id="app">
-            <!-- head -->
+<body ontouchstart>
+    <div class="page__bd" id="app">
+        <!-- head -->
 
-            <div class="header">
-                <div class="left_header">
-                    <div class="logo_container">
-                        <h1 class="title"><a href="javascript:window.history.go(-1)">Best<span>Movies</span></a></h1>
-                    </div>
-
-                    <ul class="navigation">
-                        <a>
-                            <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
-                            <li v-if="isLogin">{{username}}</li>
-                        </a>
-                        <a>
-                            <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
-                            <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
-                        </a>
-                    </ul>
+        <div class="header">
+            <div class="left_header">
+                <div class="logo_container">
+                    <h1 class="title"><a href="javascript:window.history.go(-1)">Best<span>Movies</span></a></h1>
                 </div>
 
-            </div>
-            <div class="boxContainer">
-                <table class="elementContainer">
-                    <tr>
-                        <td>
-                            <input v-model="searchText" type="text" placeholder="Search" class="search">
-                        </td>
-                        <td>
-                            <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
-                        </td>
-                    </tr>
-                </table>
+                <ul class="navigation">
+                    <a>
+                        <li v-if="!isLogin" @click="clickLoginBTN">Login</li>
+                        <li v-if="isLogin">{{username}}</li>
+                    </a>
+                    <a>
+                        <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
+                        <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
+                    </a>
+                </ul>
             </div>
 
-
-            <!-- recommend movies -->
-            <section>
-                <h1>Favourite List</h1>
-                <div class="recommendMovieRow">
-                    <div v-for="movie in favouriteTop5" class="recommentMovieContainer">
-                        <img v-bind:src="movie.img">
-                        <h3>{{movie.name}}</h3>
-                        <h4>{{movie.year}}</h4>
-                        <h4>Your rating is 7.8</h4>
-                    </div>
-
-                </div>
-                <div>
-                    <h2>ff</h2>
-                </div>
-            </section>
-
-
-
-            <div class="weui-footer">
-                <p class="weui-footer__links">
-                    <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
-                    <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
-                </p>
-                <p class="weui-footer__text">Copyright © 2021-2022</p>
-            </div>
         </div>
-    </body>
+        <div class="boxContainer">
+            <table class="elementContainer">
+                <tr>
+                    <td>
+                        <input v-model="searchText" type="text" placeholder="Search" class="search">
+                    </td>
+                    <td>
+                        <a href="#" @click="clickSearchBTN"><i class="material-icons">search</i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <!-- recommend movies -->
+        <section>
+            <h1>Favourite List</h1>
+            <div class="recommendMovieRow">
+                <div v-for="movie in favouriteTop5" class="recommentMovieContainer">
+                    <img v-bind:src="movie.img">
+                    <h3>{{movie.name}}</h3>
+                    <h4>{{movie.year}}</h4>
+                    <h4>Your rating is 7.8</h4>
+                </div>
+
+            </div>
+            <div>
+                <h2>ff</h2>
+            </div>
+        </section>
+
+
+
+        <div class="weui-footer">
+            <p class="weui-footer__links">
+                <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
+                <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
+            </p>
+            <p class="weui-footer__text">Copyright © 2021-2022</p>
+        </div>
+    </div>
+</body>
 
 </html>
-<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/all.min.js" crossorigin="anonymous"></script>
 <script src="../../static/js/echarts.min.js"></script>
 <script src="../../static/js/jquery-2.1.4.js"></script>
 <script src="../../static/webhfive/news/js/jquery-weui.js "></script>

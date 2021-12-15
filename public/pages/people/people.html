@@ -52,7 +52,7 @@
             </table>
         </div>
         <!-- login  -->
-        <div v-show="clickLogin" class="center">
+        <div v-show="clickLogin" class="center" v-cloak>
             <h1>Login</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -70,14 +70,14 @@
                     <label>Password</label>
                 </div>
                 <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
-                <input type="submit" value="Login">
+                <input type="button" value="Login" @click="loginSubmitBTN(userId,password)">
                 <div class="signup_link">
                     Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
             </form>
         </div>
         <!-- sign up  -->
-        <div v-show="clickSignup" class="center">
+        <div v-show="clickSignup" class="center" v-cloak>
             <h1>SignUp</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -100,8 +100,8 @@
                     <label>Password</label>
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
-                <input type="submit" value="SignUp">
-                <p></p>
+                <input type="button" value="SignUp" @click="signUpSubmitBTN(userId,username,password)">
+                <p></p><span>&nbsp;</span>
             </form>
         </div>
         <!-- detail  -->
@@ -150,7 +150,7 @@
 
     </div>
 </body>
-<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/all.min.js" crossorigin="anonymous"></script>
 <script src="../../static/js/echarts.min.js"></script>
 <script src="../../static/js/jquery-2.1.4.js"></script>
 <script src="../../static/webhfive/news/js/jquery-weui.js "></script>

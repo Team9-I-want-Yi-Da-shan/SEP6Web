@@ -52,7 +52,7 @@
             </table>
         </div>
         <!-- login  -->
-        <div v-show="clickLogin" class="center">
+        <div v-show="clickLogin" class="center" v-cloak>
             <h1>Login</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -70,14 +70,14 @@
                     <label>Password</label>
                 </div>
                 <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
-                <input type="submit" value="Login">
+                <input type="button" value="Login" @click="loginSubmitBTN(userId,password)">
                 <div class="signup_link">
                     Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
             </form>
         </div>
         <!-- sign up  -->
-        <div v-show="clickSignup" class="center">
+        <div v-show="clickSignup" class="center" v-cloak>
             <h1>SignUp</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -100,8 +100,8 @@
                     <label>Password</label>
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
-                <input type="submit" value="SignUp">
-                <p></p>
+                <input type="button" value="SignUp" @click="signUpSubmitBTN(userId,username,password)">
+                <p></p><span>&nbsp;</span>
             </form>
         </div>
         <!-- detail  -->
@@ -126,7 +126,7 @@
                 <div class="people">
                     <div class="directorContainer">
                         <span>Director: </span>
-                        <a v-for="name in directors">{{name.name}}</a>
+                        <a v-for="name in directors" @click="clickPeople(name.id)">{{name.name}}</a>
 
                     </div>
                     <div class="directorContainer">
@@ -148,7 +148,7 @@
         <div>Comment</div>
     </div>
 </body>
-<script src="https://kit.fontawesome.com/ba5c0a07f3.js" crossorigin="anonymous"></script>
+<script src="../../static/js/all.min.js" crossorigin="anonymous"></script>
 <script src="../../static/js/echarts.min.js"></script>
 <script src="../../static/js/jquery-2.1.4.js"></script>
 <script src="../../static/webhfive/news/js/jquery-weui.js "></script>
@@ -169,7 +169,7 @@
             id: 2872732,
             name: ' ',
             year: 0,
-            rating: 7.5,
+            rating: 0,
             // plot: "It was supposed to be a simple job. All Lucy had to do was deliver a mysterious briefcase to Mr. Jang. But immediately Lucy is caught up in a nightmarish deal where she is captured and turned into a drug mule for a new and powerful synthetic drug. When the bag she is carrying inside of her stomach leaks, Lucy's body undergoes unimaginable changes that begins to unlock her mind's full potential. With her new-found powers, Lucy turns into a merciless warrior intent on getting back at her captors. She receives invaluable help from Professor Norman, the leading authority on the human mind, and French police captain Pierre Del Rio.",
             img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
         },
@@ -203,8 +203,7 @@
                 s[pa[i].split(":")[0]] = pa[i].split(":")[1];
             }
             console.log("!!!!!", s.username, s.userid, s.isLogin)
-                // getMoviePosterImg(this.movieID)
-                // this.chart_movieRate()
+
         },
         methods: {
             clickLoginBTN() {
@@ -245,12 +244,29 @@
                 let moviedata = getMoviePosterImg(s.MovieId);
                 this.movie.plot = moviedata.plot;
                 this.movie.img = moviedata.image;
-                this.movie.name = moviedata.title;
+                // this.movie.name = moviedata.title;
                 this.directors = moviedata.directorList;
                 this.stars = moviedata.starList;
                 this.movie.year = moviedata.year;
-                // console.log(this.searchText)
+                // this.movie.rating = moviedata.imDbRating;
+                console.log("Movie data from IMDB", moviedata)
+                this.getMovieOtherData(s.MovieId)
+            },
+            //get rating , name
+            getMovieOtherData(id) {
+                _this = this;
+                console.log(this.searchResult);
+                param = {
+                    "id": id
+                }
 
+                getCloudSearch("searchMovie", 'GET', param, function(res) {
+                    console.log("mvoie", res)
+                    _this.movie.name = res.title;
+                    _this.movie.rating = res.rating;
+                    _this.movie.year = res.year;
+
+                })
             }
         }
     });
