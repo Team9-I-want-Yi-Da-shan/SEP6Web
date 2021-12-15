@@ -19,8 +19,6 @@
 
 <body ontouchstart>
     <div class="page__bd" id="app">
-        <!-- head -->
-
         <div class="header">
             <div class="left_header">
                 <div class="logo_container">
@@ -34,7 +32,7 @@
                     </a>
                     <a>
                         <li v-if="!isLogin" @click="clickSignUp ">SignUp</li>
-                        <li v-if="isLogin" @click="clickFavourite">Favourite List</li>
+                        <li v-if="isLogin" @click="clickFavourite(userId)">Favourite List</li>
                     </a>
                 </ul>
             </div>
@@ -53,7 +51,7 @@
             </table>
         </div>
         <!-- login  -->
-        <div v-show="clickLogin" class="center">
+        <div v-show="clickLogin" class="center" v-cloak>
             <h1>Login</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -71,14 +69,14 @@
                     <label>Password</label>
                 </div>
                 <a class="pass" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Forget Password?</a>
-                <input type="button" value="Login">
+                <input type="button" value="Login" @click="loginSubmitBTN(userId,password)">
                 <div class="signup_link">
                     Not a member?<a @click="clickSignUp">Signup</a>
                 </div>
             </form>
         </div>
         <!-- sign up  -->
-        <div v-show="clickSignup" class="center">
+        <div v-show="clickSignup" class="center" v-cloak>
             <h1>SignUp</h1>
             <div @click="clickCloseBTN" class="close">
                 <i class="fas fa-times"></i>
@@ -101,7 +99,7 @@
                     <label>Password</label>
                 </div>
                 <!-- <div class="pass">Forget Password?</div> -->
-                <input type="button" value="SignUp" @click="signUpSubmitBTN">
+                <input type="button" value="SignUp" @click="signUpSubmitBTN(userId,username,password)">
                 <p></p><span>&nbsp;</span>
             </form>
         </div>
@@ -223,11 +221,9 @@
 
         },
         beforeMount: function() {
-            // this.getImagesFromIMDB()
+            this.getImagesFromIMDB()
         },
         mounted: function() {
-            this.getCloudSearch();
-
             this.chart_movieRate()
             console.log(this.recommends)
         },
@@ -244,14 +240,53 @@
                 this.clickSignup = true;
             },
             clickCloseBTN() {
+                console.log("close");
                 this.clickLogin = false;
                 this.clickSignup = false
             },
-            loginSubmitBTN() {
-                alert(this.userId)
+            loginSubmitBTN(id, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "") {
+                    param = {
+                        "username": id,
+                        "password": pwd
+                    }
+                    getCloudSearch("login", param, function(res) {
+                        console.log("login res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            _this.username = res.nickname;
+                            _this.isLogin = true;
+                            _this.userId = res.username;
+                        } else {
+                            alert("Wrong")
+                        }
+                    })
+                }
             },
-            signUpSubmitBTN() {
-                console.log(this.password)
+            signUpSubmitBTN(id, username, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "" && username != "") {
+                    param = {
+                        "username": id,
+                        "nickname": username,
+                        "password": pwd
+                    }
+                    getCloudSearch("register", param, function(res) {
+                        console.log("register res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+
+                        } else {
+                            alert("Wrong")
+                        }
+                    })
+                }
+            },
+            clickFavourite(userId) {
+                console.log("Fav", userId);
             },
             clickSearchBTN() {
                 let url = "pages/searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
@@ -265,36 +300,7 @@
                 document.cookie = "username:" + "this.username2" + "&userid:" + "this.userId" + "&isLogin:" + islogin;
                 location.href = url;
             },
-            getSearch() {
-                data = getCloudSearch();
-                console.log(data)
-            },
-            getCloudSearch() {
-                // var header = "Access-Control-Allow-Origin: *";
-                // header("Access-Control-Allow-Origin: *");
-                param = {
-                    "searchText": ""
-                }
-                $.ajax({
-                    data: param,
-                    // k_4ivqx8jp
-                    //k_3n7lo407
-                    //k_0hv922rs
-                    url: "https://europe-west1-mapapi-296515.cloudfunctions.net/searchPeople",
-                    type: 'POST',
-                    // header = "Access-Control-Allow-Origin: *",
-                    success: function(data) {
-                        console.log(data);
-                    },
-                    error: function(data) {
-                        console.log("error", data)
-                        $.hideLoading();
-                        $.toptip('Error network', 'error');
-                    }
 
-                });
-
-            },
 
             //Echart
             chart_movieRate() {

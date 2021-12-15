@@ -1,7 +1,7 @@
  // k_4ivqx8jp/
  //k_3n7lo407/
  //k_0hv922rs/
- var tokenIMDB = 'k_0hv922rs/'
+ var tokenIMDB = 'k_4ivqx8jp/'
  var cloudUrl = "https://europe-west1-mapapi-296515.cloudfunctions.net/"
 
 
@@ -54,7 +54,7 @@
          error: function(data) {
              console.log("error", data)
              $.hideLoading();
-             $.toptip('Error network', 'error');
+             $.toptip('Cloud Error network', 'error');
          }
 
      });
@@ -155,11 +155,12 @@
 
  function getIMDBPeopleId(movieId) {
      const len = movieId.toString().length
-     if (len < 7) {
+     if (len < 7 && movieId.search("nm") != -1) {
          const initial = 7
          movieId = PrefixInteger(movieId, initial)
+         movieId = "nm" + movieId
      }
-     movieId = "nm" + movieId
+
      console.log("movieId", movieId.toString())
      return movieId;
  }
