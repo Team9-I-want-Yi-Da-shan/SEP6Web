@@ -191,15 +191,15 @@
             },
             loginSubmitBTN(id, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
+
                 if (id != "" && pwd != "") {
                     param = {
                         "username": id,
                         "password": pwd
                     }
                     getCloudSearch("login", 'POST', param, function(res) {
-                        console.log("login res", res)
-                            // _this.names = res
+
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             _this.username = res.nickname;
                             _this.isLogin = true;
@@ -216,7 +216,7 @@
             },
             signUpSubmitBTN(id, username, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
+
                 if (id != "" && pwd != "" && username != "") {
                     param = {
                         "username": id,
@@ -224,8 +224,8 @@
                         "password": pwd
                     }
                     getCloudSearch("register", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
+
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             $.toptip('Register success' + " Hi " + username, 'success');
 
@@ -249,29 +249,28 @@
             getSearchPeople() {
                 _this = this
                 if (this.searchResult != "") {
-                    console.log(this.searchResult);
+
                     param = {
-                            "searchText": this.searchResult
-                        }
-                        // new Promise(function(resolve, reject) {
+                        "searchText": this.searchResult
+                    }
+
                     getCloudSearch("searchPeople", 'POST', param, function(res) {
-                            console.log("fun", res)
-                            _this.names = res
-                        })
-                        // })
+
+                        _this.names = res
+                    })
+
                 }
             },
             getSearchMovie() {
                 _this = this
                 if (this.searchResult != "") {
-                    console.log(this.searchResult);
+
                     param = {
                         "searchText": this.searchResult
                     }
                     getCloudSearch("searchMovie", 'POST', param, function(res) {
                         _this.movieResults = res
                     })
-
                 }
             },
             clickMovieDetail(id) {

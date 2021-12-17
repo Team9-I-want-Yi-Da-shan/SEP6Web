@@ -73,13 +73,6 @@
 
 
 
-        <div class="weui-footer">
-            <p class="weui-footer__links">
-                <a href="https://www.imdb.com/?ref_=nv_home" class="weui-footer__link">IMDB</a>
-                <a href="https://www.via.dk/" class="weui-footer__link">VIA</a>
-            </p>
-            <p class="weui-footer__text">Copyright © 2021-2022</p>
-        </div>
     </div>
 </body>
 
@@ -163,19 +156,16 @@
             },
             deleteFav(id) {
                 _this = this
-                console.log(this.isLogin, this.userId)
                 if (this.isLogin == true && this.userId != "") {
                     param = {
                         "username": _this.userId,
                         "movieId": id
                     }
                     getCloudSearch("removeMovieFromTopList", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
                         if (res.requestIsSucceed) {
                             $.toptip('Remove success', 'success');
                             _this.favouriteList = res.results;
-                            this.getTopList()
+                            _this.getTopList()
                         } else {
                             $.toptip('Remove failed' + res.aresponseMessage, 'warn');
                         }
@@ -188,25 +178,21 @@
                 var params = url.substr(1);
                 var pa = params.split("&");
                 var s = new Object();
-                console.log(location)
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
                 this.userId = s.userid;
-                console.log(this.userId)
 
             },
             getTopList() {
                 _this = this
-                console.log(this.isLogin, this.userId)
                 if (this.isLogin == true && this.userId != "") {
 
                     param = {
                         "username": this.userId,
                     }
                     getCloudSearch("getMovieTopList", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             // $.toptip('Rate success', 'success');
                             _this.favouriteList = res.results;

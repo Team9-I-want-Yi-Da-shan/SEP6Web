@@ -222,15 +222,13 @@
             },
             loginSubmitBTN(id, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
                 if (id != "" && pwd != "") {
                     param = {
                         "username": id,
                         "password": pwd
                     }
                     getCloudSearch("login", 'POST', param, function(res) {
-                        console.log("login res", res)
-                            // _this.names = res
+
                         if (res.requestIsSucceed) {
                             _this.username = res.nickname;
                             _this.isLogin = true;
@@ -247,7 +245,7 @@
             },
             signUpSubmitBTN(id, username, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
+
                 if (id != "" && pwd != "" && username != "") {
                     param = {
                         "username": id,
@@ -255,8 +253,6 @@
                         "password": pwd
                     }
                     getCloudSearch("register", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
                         if (res.requestIsSucceed) {
                             $.toptip('Register success' + " Hi " + username, 'success');
 
@@ -267,17 +263,14 @@
                 }
             },
             getUrlData() {
-                var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
-                var params = url.substr(1); //去掉问号
+                var url = location.search;
+                var params = url.substr(1);
                 var pa = params.split("&");
                 var s = new Object();
 
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
-                // this.searchText = s.PeopleId;
-                // console.log(this.searchText)
-                // let data = getIMDBPeopleId(s.nameId);
 
                 let data = getPeopleData(s.PeopleId);
                 this.people.img = data.image;
@@ -287,7 +280,6 @@
                 this.relateMovies = data.castMovies;
                 this.people.birth = data.birthDate;
 
-                console.log(data)
             }
         }
     });
