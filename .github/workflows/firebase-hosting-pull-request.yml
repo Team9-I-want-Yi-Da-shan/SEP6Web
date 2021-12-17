@@ -27,5 +27,5 @@ jobs:
     - name: Firebase Deploy
       run: |
         sudo npm install -g firebase-tools
-        firebase use prod --token ${{ secrets.FIREBASE_HOSTING_TOKEN }}
+        firebase use firebase-hosting-pull-request --token ${{ secrets.FIREBASE_HOSTING_TOKEN }}
         firebase deploy --token ${{ secrets.FIREBASE_HOSTING_TOKEN }}
