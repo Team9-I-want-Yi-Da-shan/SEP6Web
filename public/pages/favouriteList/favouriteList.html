@@ -54,21 +54,22 @@
 
 
         <!-- recommend movies -->
-        <section>
+        <div class="favouriteContainer">
             <h1>Favourite List</h1>
-            <div class="recommendMovieRow">
-                <div v-for="movie in favouriteTop5" class="recommentMovieContainer">
-                    <img v-bind:src="movie.img">
-                    <h3>{{movie.name}}</h3>
-                    <h4>{{movie.year}}</h4>
-                    <h4>Your rating is 7.8</h4>
-                </div>
 
-            </div>
-            <div>
-                <h2>ff</h2>
-            </div>
-        </section>
+            <ul>
+                <li v-for="item ,index in favouriteList" @click="clickGetMovieDetail(item.id)">
+                    <span class="number">{{index+1}}</span>
+                    <span class="name">{{item.title}}</span>
+                    <span class="points">{{item.year}}</span>
+                    <span class="badge"> Rating: {{item.rating}}</span>
+                    <span class="close" @click.stop="deleteFav(item.id)"> 
+                        <i class="fas fa-times"></i>
+                    </div></span>
+                </li>
+
+            </ul>
+        </div>
 
 
 
@@ -101,48 +102,30 @@
         username: '',
         searchText: '',
         img: "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg",
-        favouriteTop5: [{
-                "id": 2872732,
-                "name": "Lucy",
-                "year": 2000,
-                "img": "https://imdb-api.com/images/original/MV5BODcxMzY3ODY1NF5BMl5BanBnXkFtZTgwNzg1NDY4MTE@._V1_Ratio0.6791_AL_.jpg"
 
-            }, {
-                "id": 4679576,
-                "name": "Bloodhound",
-                "year": 2020,
-            }, {
-                "id": 3380766,
-                "name": "King's Gambit",
-                "year": 2000,
-            }, {
-                "id": 3278540,
-                "name": "A Nice Girl Like You",
-                "year": 2002,
-            }, {
-                "id": 65005,
-                "name": "Oso yparhei erotas",
-                "year": 2019,
-            }
-
-        ],
-        favouriteList: [{
-            "id": 4679576,
-            "name": "Bloodhound",
-            "year": 2020,
-        }, {
-            "id": 3380766,
-            "name": "King's Gambit",
-            "year": 2000,
-        }, {
-            "id": 3278540,
-            "name": "A Nice Girl Like You",
-            "year": 2002,
-        }, {
-            "id": 65005,
-            "name": "Oso yparhei erotas",
-            "year": 2019,
-        }]
+        favouriteList: [
+            //     {
+            //     "id": 4679576,
+            //     "title": "Bloodhound",
+            //     "year": 2020,
+            //     "rating": 4
+            // }, {
+            //     "id": 3380766,
+            //     "title": "King's Gambit",
+            //     "year": 2000,
+            //     "rating": 4
+            // }, {
+            //     "id": 3278540,
+            //     "title": "A Nice Girl Like You",
+            //     "year": 2002,
+            //     "rating": 4
+            // }, {
+            //     "id": 65005,
+            //     "title": "Oso yparhei erotas",
+            //     "year": 2019,
+            //     "rating": 5
+            // }
+        ]
 
 
     }
@@ -150,19 +133,17 @@
         el: "#app",
         data: data,
         mounted: function() {
-
-
+            this.getSearchText();
+            this.getTopList()
         },
         methods: {
             clickLoginBTN() {
                 this.clickSignup = false;
                 this.clickLogin = true;
-
             },
             clickSignUp() {
                 this.clickLogin = false;
                 this.clickSignup = true;
-
             },
             clickCloseBTN() {
                 this.clickLogin = false;
@@ -172,6 +153,70 @@
                 let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
+            clickFavourite(userId) {
+                let url = "../favouriteList/favouriteList.html?" + "userid=" + this.userId;
+                location.href = url;
+            },
+            clickGetMovieDetail(id) {
+                let url = "../movieDetail/detailpage.html?" + "MovieId=" + id;
+                location.href = url;
+            },
+            deleteFav(id) {
+                _this = this
+                console.log(this.isLogin, this.userId)
+                if (this.isLogin == true && this.userId != "") {
+                    param = {
+                        "username": _this.userId,
+                        "movieId": id
+                    }
+                    getCloudSearch("removeMovieFromTopList", 'POST', param, function(res) {
+                        console.log("register res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            $.toptip('Remove success', 'success');
+                            _this.favouriteList = res.results;
+                            this.getTopList()
+                        } else {
+                            $.toptip('Remove failed' + res.aresponseMessage, 'warn');
+                        }
+                    })
+                }
+            },
+
+            getSearchText() {
+                var url = location.search;
+                var params = url.substr(1);
+                var pa = params.split("&");
+                var s = new Object();
+                console.log(location)
+                for (var i = 0; i < pa.length; i++) {
+                    s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
+                }
+                this.userId = s.userid;
+                console.log(this.userId)
+
+            },
+            getTopList() {
+                _this = this
+                console.log(this.isLogin, this.userId)
+                if (this.isLogin == true && this.userId != "") {
+
+                    param = {
+                        "username": this.userId,
+                    }
+                    getCloudSearch("getMovieTopList", 'POST', param, function(res) {
+                        console.log("register res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            // $.toptip('Rate success', 'success');
+                            _this.favouriteList = res.results;
+                        } else {
+                            $.toptip('Rate failed' + res.aresponseMessage, 'warn');
+                        }
+                    })
+                }
+            },
+
 
             //Echart
             chart_movieRate() {

@@ -5,50 +5,15 @@
  var tokenIMDB = 'k_cn21q8tl/'
  var cloudUrl = "https://europe-west1-mapapi-296515.cloudfunctions.net/"
 
-
- //获取新版本token数据方法，建议使用
- function getTokenToGetData(ifLog, data, fn) {
-     // platformInfo.getPlatformToken(function(result) {
-     //     if (ifLog != false) {
-     //         alert("onSuccess" + JSON.stringify(result));
-     //     }
-     //     tokenSecond = result;
-     //     var header = "src=wapp,token=" + tokenSecond + ",session=" + session + ",imei=" + imei + ",code=" + apkCode + ",ver=" + apkVersion;
-     var header = "";
-     var url = "http://" + routeIp + ":" + routePort + data.url;
-     var param = data.param;
-     $.ajax({
-             url: url,
-             data: JSON.stringify(param),
-             contentType: "application/json",
-             dataType: "json",
-             type: "post",
-             timeout: 100000,
-
-             success: function(msg) {
-                 fn(msg);
-                 console.log(param, msg)
-             },
-             error: function() {
-                 $.hideLoading();
-                 $.toptip('请求数据异常', 'error');
-                 //console.log("请求数据异常");
-             }
-         })
-         // }, function(result) {
-         //     alert("onFail" + JSON.stringify(result))
-         // });
- }
-
-
  function getCloudSearch(url, types, param, fun) {
      // var header = "Access-Control-Allow-Origin: *";
      // header("Access-Control-Allow-Origin: *");
-
+     console.log("param", param)
      $.ajax({
          data: param,
          url: cloudUrl + url,
          type: types,
+         dataType: "json",
          success: function(res) {
              fun(res)
          },
@@ -62,52 +27,18 @@
 
  }
 
- function getCloudData(data, fn) {
-
-     var url = cloudUrl + data.url;
-     var param = data.param;
-     $.ajax({
-         url: url,
-         data: param,
-         contentType: "application/json",
-         dataType: "json",
-         type: "get",
-         timeout: 100000,
-         async: false,
-     })
-
-     .success(function(msg) {
-             fn(msg);
-             console.log("message", msg)
-
-         }),
-         error(function() {
-             $.hideLoading();
-             $.toptip('Cloud请求数据异常', 'error');
-             //console.log("请求数据异常");
-         })
-         // }, function(result) {
-         //     alert("onFail" + JSON.stringify(result))
-         // });
- }
-
-
-
  function getMoviePosterImg(movieId) {
      movieId = getIMDBMovieId(movieId);
 
      $.ajax({
-             // k_4ivqx8jp
-             //k_3n7lo407
-             //k_0hv922rs
              url: "http://imdb-api.com/en/API/Title/" + tokenIMDB + movieId,
              type: "get",
              data: {},
              async: false,
          })
          .done(function(data) {
-             if (data.errorMessage != "") {
-                 $.toptip("IDMB " + data.errorMessage, 'error');
+             if (data.errorMessage != "" && data.errorMessage != null) {
+                 $.toptip("IDMB " + data.errorMessage, 'warn');
              }
              img = data
          })
@@ -156,9 +87,11 @@
 
  function getIMDBPeopleId(movieId) {
      const len = movieId.toString().length
-     if (len < 7 && movieId.search("nm") != -1) {
+     if (len < 7) {
          const initial = 7
          movieId = PrefixInteger(movieId, initial)
+     }
+     if (movieId.search("nm") == -1) {
          movieId = "nm" + movieId
      }
 
@@ -176,17 +109,18 @@
  // Function for url
  function getCookieLoginData(_this) {
      var params = document.cookie;
-     var pa = params.split("&");
-     var s = new Object();
-     for (var i = 0; i < pa.length; i++) {
-         s[pa[i].split(":")[0]] = pa[i].split(":")[1];
+     if (params != null && params != undefined) {
+         var pa = params.split("&");
+         var s = new Object();
+         for (var i = 0; i < pa.length; i++) {
+             s[pa[i].split(":")[0]] = pa[i].split(":")[1];
+         }
+         if (s.isLogin == "true") {
+             _this.isLogin = s.isLogin;
+             _this.username = s.username;
+             _this.userId = s.userid
+         }
      }
-     console.log("Read cookie ", s.username + s.userid + s.isLogin)
-     if (s.isLogin == "true") {
-         console.log("??????????????")
-         _this.isLogin = s.isLogin;
-         _this.username = s.username;
-         _this.userId = s.userid
-     }
+
 
  }

@@ -169,7 +169,7 @@
         people: {
             id: 424060,
             name: 'Scarlett Johansson',
-            birth: "1984",
+            birth: "",
             img: "",
             summary: "",
             award: "Nominated for 2 Oscars. Another 63 wins & 229 nominations."
@@ -189,6 +189,9 @@
     var vue = new Vue({
         el: "#app",
         data: data,
+        created: function() {
+            getCookieLoginData(this)
+        },
         mounted: function() {
             this.getUrlData()
                 // getMoviePosterImg(13282096)
@@ -209,9 +212,59 @@
                 this.clickLogin = false;
                 this.clickSignup = false
             },
+            clickFavourite(userId) {
+                let url = "../favouriteList/favouriteList.html?" + "userid=" + this.userId;
+                location.href = url;
+            },
             clickSearchBTN() {
                 let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
+            },
+            loginSubmitBTN(id, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "") {
+                    param = {
+                        "username": id,
+                        "password": pwd
+                    }
+                    getCloudSearch("login", 'POST', param, function(res) {
+                        console.log("login res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            _this.username = res.nickname;
+                            _this.isLogin = true;
+                            _this.userId = res.username;
+                            _this.clickLogin = false;
+                            $.toptip('Login success' + " Hi " + res.nickname, 'success');
+                            document.cookie = "username:" + _this.username + "&userid:" + _this.userId + "&isLogin:" + true;
+                        } else {
+
+                            $.toptip('Wrong password or number', 'warn');
+                        }
+                    })
+                }
+            },
+            signUpSubmitBTN(id, username, pwd) {
+                _this = this
+                console.log("Login Test!!!", id + pwd)
+                if (id != "" && pwd != "" && username != "") {
+                    param = {
+                        "username": id,
+                        "nickname": username,
+                        "password": pwd
+                    }
+                    getCloudSearch("register", 'POST', param, function(res) {
+                        console.log("register res", res)
+                            // _this.names = res
+                        if (res.requestIsSucceed) {
+                            $.toptip('Register success' + " Hi " + username, 'success');
+
+                        } else {
+                            $.toptip('Register failed' + res.aresponseMessage, 'warn');
+                        }
+                    })
+                }
             },
             getUrlData() {
                 var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
@@ -232,11 +285,9 @@
                 this.people.summary = data.summary;
                 this.people.award = data.award;
                 this.relateMovies = data.castMovies;
-                this.birth = data.birthDate;
+                this.people.birth = data.birthDate;
+
                 console.log(data)
-
-
-
             }
         }
     });

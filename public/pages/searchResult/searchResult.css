@@ -42,10 +42,20 @@
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
 }
 
+.detailLine:hover {
+    transform: scale(1.01);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
 .detailLine img {
     width: 60px;
     margin: 4px 4px 4px 16px;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.detailLine span {
+    width: 10%;
+    text-align: right;
 }
 
 .detailLine p {

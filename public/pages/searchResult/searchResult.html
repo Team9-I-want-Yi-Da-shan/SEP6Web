@@ -123,7 +123,6 @@
                 <h1>Names</h1>
                 <div class="detailLine" v-for="item in names" @click="clickPeopleDetail(item.id)">
                     <p> {{item.name}}</p>
-
                 </div>
             </div>
         </div>
@@ -147,8 +146,6 @@
         password: '',
         username: '',
         searchText: '',
-
-
         searchResult: '',
         hasResult: true,
         movieResults: [],
@@ -188,6 +185,10 @@
                 let url = "../searchResult/searchResult.html?" + "SearchMovie=" + this.searchText;
                 location.href = url;
             },
+            clickFavourite(userId) {
+                let url = "../favouriteList/favouriteList.html?" + "userid=" + this.userId;
+                location.href = url;
+            },
             loginSubmitBTN(id, pwd) {
                 _this = this
                 console.log("Login Test!!!", id + pwd)
@@ -205,8 +206,9 @@
                             _this.userId = res.username;
                             _this.clickLogin = false;
                             $.toptip('Login success' + " Hi " + res.nickname, 'success');
+                            document.cookie = "username:" + _this.username + "&userid:" + _this.userId + "&isLogin:" + true;
                         } else {
-                            alert("Wrong")
+
                             $.toptip('Wrong password or number', 'warn');
                         }
                     })
@@ -234,17 +236,15 @@
                 }
             },
             getSearchText() {
-                var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
-                var params = url.substr(1); //去掉问号
+                var url = location.search;
+                var params = url.substr(1);
                 var pa = params.split("&");
                 var s = new Object();
-                console.log(location)
+
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
                 this.searchResult = s.SearchMovie;
-                console.log(this.searchResult)
-
             },
             getSearchPeople() {
                 _this = this
@@ -266,14 +266,12 @@
                 if (this.searchResult != "") {
                     console.log(this.searchResult);
                     param = {
-                            "searchText": this.searchResult
-                        }
-                        // new Promise(function(resolve, reject) {
+                        "searchText": this.searchResult
+                    }
                     getCloudSearch("searchMovie", 'POST', param, function(res) {
-                            console.log("fun", res)
-                            _this.movieResults = res
-                        })
-                        // })
+                        _this.movieResults = res
+                    })
+
                 }
             },
             clickMovieDetail(id) {

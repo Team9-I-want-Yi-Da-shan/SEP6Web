@@ -1,0 +1,68 @@
+.favouriteContaner {
+    display: flex;
+}
+
+.movieContainer {
+    display: flex;
+}
+
+.favouriteContainer ul {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    margin: 10px auto 0;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, .1);
+}
+
+.favouriteContainer h1 {
+    text-align: center;
+    padding: 10px 0 20px 0;
+    border-bottom: 1px solid silver;
+    font-family: Smooch;
+}
+
+.favouriteContainer li {
+    display: flex;
+    background: rgba(255, 255, 255, 1);
+    padding: 10px 20px;
+    margin: 5px 0;
+    transition: .5s;
+    color: rgb(0, 0, 0);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, .1);
+}
+
+.favouriteContainer span:nth-child(1) {
+    width: 5%;
+}
+
+.favouriteContainer span:nth-child(2) {
+    width: 70%;
+}
+
+.favouriteContainer span:nth-child(3) {
+    width: 10%;
+    color: rgba(0, 0, 0, .3);
+}
+
+.favouriteContainer span:nth-child(4) {
+    width: 10%;
+    color: rgba(0, 0, 0, .8);
+    text-align: right;
+}
+
+.favouriteContainer span:nth-child(5) {
+    width: 7%;
+    text-align: right;
+}
+
+.favouriteContainer span:nth-child(5) :hover {
+    transform: scale(1.1);
+}
+
+.favouriteContainer li:hover {
+    transform: scale(1.01);
+    background: bisque
+}

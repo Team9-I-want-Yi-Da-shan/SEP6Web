@@ -69,7 +69,7 @@ body {
     height: 100%;
     display: table;
     float: left;
-    padding: 0px 20px;
+    padding: 10px 20px;
 }
 
 .navigation a li {
@@ -78,6 +78,11 @@ body {
     color: aliceblue;
     font-family: 'Smooch', cursive;
     cursor: pointer;
+}
+
+.navigation a li:hover {
+    color: white;
+    transform: scale(1.05);
 }
 
 .navigation a li :hover {
@@ -156,6 +161,11 @@ body {
     text-align: center;
     padding: 10px 0 20px 0;
     border-bottom: 1px solid silver;
+    font-family: Smooch;
+}
+
+.center p {
+    text-align: center;
     font-family: Smooch;
 }
 
@@ -402,3 +412,38 @@ section h1 {
     top: 5px;
     text-align: center;
 } */
+
+.cleanfloat::after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+
+
+/*清浮动*/
+
+ul li {
+    list-style: none;
+    float: left;
+    font-size: 30px;
+    margin: 5px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.cleanfloat {
+    padding-left: 4.1rem;
+}
+
+
+/*五角星样式*/
+
+.hs,
+.cs {
+    color: #CDDC39;
+}
+
+
+/*五角星点击后样式*/
