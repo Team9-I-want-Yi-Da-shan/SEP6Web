@@ -371,13 +371,13 @@
                 }
             },
             addToTopList() {
+                this.submitRating();
                 _this = this
                 if (this.isLogin == "true" && this.userId != "" && this.movieID != "" && this.userRate != 0) {
-                    _this.submitRating();
+
                     param = {
                         "username": this.userId,
                         "movieId": this.movieID,
-                        "rating": parseInt(this.userRate)
                     }
                     getCloudSearch("addMovieToTopList", 'POST', param, function(res) {
                         if (res.requestIsSucceed) {
