@@ -2,12 +2,13 @@
  //k_3n7lo407/
  //k_0hv922rs/
  //k_cn21q8tl
- var tokenIMDB = 'k_cn21q8tl/'
+
+ var tokenIMDB = 'k_4ivqx8jp/'
+
  var cloudUrl = "https://europe-west1-mapapi-296515.cloudfunctions.net/"
 
  function getCloudSearch(url, types, param, fun) {
-     // var header = "Access-Control-Allow-Origin: *";
-     // header("Access-Control-Allow-Origin: *");
+
      console.log("param", param)
      $.ajax({
          data: param,
@@ -22,9 +23,7 @@
              $.hideLoading();
              $.toptip('Cloud Error network', 'error');
          }
-
      });
-
  }
 
  function getMoviePosterImg(movieId) {
