@@ -157,7 +157,7 @@
                 </div>
             </div>
         </div>
-        <div>Comment</div>
+
     </div>
 </body>
 <script src="../../static/js/all.min.js" crossorigin="anonymous"></script>
@@ -239,15 +239,13 @@
             },
             loginSubmitBTN(id, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
                 if (id != "" && pwd != "") {
                     param = {
                         "username": id,
                         "password": pwd
                     }
                     getCloudSearch("login", 'POST', param, function(res) {
-                        console.log("login res", res)
-                            // _this.names = res
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             _this.username = res.nickname;
                             _this.isLogin = true;
@@ -264,7 +262,6 @@
             },
             signUpSubmitBTN(id, username, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
                 if (id != "" && pwd != "" && username != "") {
                     param = {
                         "username": id,
@@ -272,8 +269,7 @@
                         "password": pwd
                     }
                     getCloudSearch("register", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             $.toptip('Register success' + " Hi " + username, 'success');
 
@@ -288,7 +284,6 @@
                 location.href = url;
             },
             clickPeople(peopleId) {
-                console.log("CLICK", peopleId)
                 let url = "../people/people.html?" + "PeopleId=" + peopleId;
                 location.href = url;
             },
@@ -297,13 +292,12 @@
                 var params = url.substr(1); //去掉问号
                 var pa = params.split("&");
                 var s = new Object();
-                console.log(location)
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
                 this.getMovieOtherData(s.MovieId)
                 this.movieID = s.MovieId;
-                console.log(this.movieID)
+
                 let moviedata = getMoviePosterImg(s.MovieId);
                 this.movie.plot = moviedata.plot;
                 this.movie.img = moviedata.image;
@@ -312,7 +306,7 @@
                 this.stars = moviedata.starList;
                 this.movie.year = moviedata.year;
                 this.movie.rating = moviedata.imDbRating;
-                console.log("Movie data from IMDB", moviedata)
+
 
             },
             //get rating , name

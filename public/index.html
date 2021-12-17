@@ -207,7 +207,6 @@
                 this.clickSignup = true;
             },
             clickCloseBTN() {
-                console.log("close");
                 this.clickLogin = false;
                 this.clickSignup = false
             },
@@ -218,15 +217,13 @@
             },
             loginSubmitBTN(id, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
                 if (id != "" && pwd != "") {
                     param = {
                         "username": id,
                         "password": pwd
                     }
                     getCloudSearch("login", 'POST', param, function(res) {
-                        console.log("login res", res)
-                            // _this.names = res
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             _this.username = res.nickname;
                             _this.isLogin = true;
@@ -243,7 +240,6 @@
             },
             signUpSubmitBTN(id, username, pwd) {
                 _this = this
-                console.log("Login Test!!!", id + pwd)
                 if (id != "" && pwd != "" && username != "") {
                     param = {
                         "username": id,
@@ -251,8 +247,7 @@
                         "password": pwd
                     }
                     getCloudSearch("register", 'POST', param, function(res) {
-                        console.log("register res", res)
-                            // _this.names = res
+                        // _this.names = res
                         if (res.requestIsSucceed) {
                             $.toptip('Register success' + " Hi " + username, 'success');
 
@@ -264,13 +259,11 @@
             },
             getCookieData() {
                 var params = document.cookie;
-                console.log("cookie ", params)
                 var pa = params.split("&");
                 var s = new Object();
                 for (var i = 0; i < pa.length; i++) {
                     s[pa[i].split(":")[0]] = pa[i].split(":")[1];
                 }
-                console.log("Cookieccc", s.username)
                 if (s.username != '' && s.userid != '' && isLogin == true) {
                     this.isLogin = s.isLogin;
                     this.username = s.username;
@@ -344,25 +337,18 @@
                 myChart.setOption(option);
             },
 
-
-
-
             //Get 10 movies from cloud
             getRecommendMovies() {
                 _this = this;
                 getCloudSearch("MovieRecommendation", 'GET', undefined, function(res) {
-                    console.log("Recommends", res)
                     _this.recommends = res;
                     setTimeout(_this.getImagesFromIMDB(), 500)
-
                 })
             },
             getImagesFromIMDB() {
                 // this.getRecommendMovies()
-
                 for (let index = 0; index < this.recommends.length; index++) {
                     var imge = getMoviePosterImg(this.recommends[index].id).image;
-                    console.log("!!", imge)
                     this.recommends[index].img = imge
                 }
 
